@@ -13,7 +13,6 @@ import br.com.hiago640.splitdumb.model.Grupo;
 import br.com.hiago640.splitdumb.model.Pessoa;
 import br.com.hiago640.splitdumb.repository.GrupoRepository;
 import br.com.hiago640.splitdumb.repository.PessoaRepository;
-import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 
 @RestController
