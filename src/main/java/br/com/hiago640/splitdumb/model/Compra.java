@@ -101,7 +101,7 @@ public class Compra implements Serializable {
 	@Override
 	public String toString() {
 		return String.format("Compra [id=%s, descricao=%s, valorCompra=%s, comprador=%s]", id,
-				descricao, valorCompra, comprador, envolvidos);
+				descricao, valorCompra, comprador);
 	}
 
 }
