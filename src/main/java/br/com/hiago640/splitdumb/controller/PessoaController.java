@@ -41,7 +41,7 @@ public class PessoaController {
 	public Pessoa joinGrupo(@RequestParam(name = "idPessoa") long idPessoa,
 			@RequestParam(name = "idGrupo") long idGrupo) {
 		Pessoa pessoa = pessoaRepository.findById(idPessoa).orElse(null);
-		Grupo grupo = grupoRepository.findById(idGrupo).orElse(null);
+		Grupo grupo = grupoRepository.buscarComComprasByID(idGrupo);
 
 		if (pessoa != null && grupo != null) {
 
