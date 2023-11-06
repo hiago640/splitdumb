@@ -37,7 +37,9 @@ public class PessoaController {
 
 	@PostMapping("/cadastra")
 	public ModelAndView pagina(Pessoa pessoa) {
+
 		logger.info("pessoa recebida {}", pessoa.getNome());
+
 		ModelAndView model = new ModelAndView("cadastrapessoa");
 		model.addObject("pessoa", pessoa);
 

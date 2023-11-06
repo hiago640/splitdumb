@@ -1,18 +1,37 @@
 <!DOCTYPE html>
 <html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>Spring MVC com Spring Boot</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+	<title>Splitdump</title>
 </head>
+
 <body>
-	<h1>Sitema de Vacinação!</h1>
+	<h1>Splitdump</h1>
 
-	 <form th:action="@{api/splitdumb/pessoas/cadastra}" method="post">
-        <input type="text" name="nome" id="nome" placeholder="Digite seu nome">
+	<h1>Cadastrar Pessoas</h1>
 
-        <input type="submit" value="Enviar">
-    </form>
+	<form th:action="@{api/splitdumb/pessoas/cadastra}" method="post">
+		<label>Nome de usuário</label><br>
+		<input type="text" name="nome" id="nome" placeholder="Digite seu nome">
+		<br>
+
+		<label>E-mail</label><br>
+		<input type="email" name="email" id="email" placeholder="E-mail">
+		<br>
+
+		<label>Senha do usuário</label><br>
+		<input type="password" name="senha" id="senha" placeholder="Digite sua senha">
+		<br>
+		<br>
+		<input type="submit" value="Enviar">
+	</form>
+
+	<h1>Cadastrar Grupo</h1>
+
+	<h1>Cadastrar Compra</h1>
 
 </body>
+
 </html>

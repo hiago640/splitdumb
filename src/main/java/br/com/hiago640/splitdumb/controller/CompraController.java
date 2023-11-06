@@ -28,8 +28,10 @@ public class CompraController {
 
 	@GetMapping("/buscar/")
 	public Set<Compra> buscaComprasPorGrupo(@RequestParam("idGrupo") Long idGrupo) {
+
 		logger.info("entrou em buscaComprasPorGrupo");
 		logger.info("idGrupo recebido: {}", idGrupo);
+
 		Grupo grupo = grupoRepository.buscarComComprasByID(idGrupo);
 
 		logger.info("grupo localizado: {}", grupo);
@@ -40,7 +42,9 @@ public class CompraController {
 
 	@PostMapping("/criar")
 	public Compra novaCompra(@Valid Compra compra) {
+
 		logger.info("entrou em novaCompra");
+
 		Grupo grupo = compra.getGrupo();
 		grupo.getCompras().add(compra);
 

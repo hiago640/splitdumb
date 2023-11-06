@@ -25,12 +25,18 @@ public class GrupoController {
 
 	@GetMapping("/buscar")
 	public List<Grupo> buscarGrupos() {
+
 		logger.info("entrou em buscarGrupos");
 		return grupoRepository.buscarComCompras();
+
 	}
 
 	@PostMapping("/criar")
 	public Grupo novoGrupo(@Valid Grupo grupo) {
+
+		logger.info("Entrou em novoGrupo");
+		logger.info("Salvando grupo: {}", grupo);
+
 		grupoRepository.save(grupo);
 
 		return grupo;
