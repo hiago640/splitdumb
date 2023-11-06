@@ -16,7 +16,6 @@ import br.com.hiago640.splitdumb.model.Grupo;
 import br.com.hiago640.splitdumb.model.Pessoa;
 import br.com.hiago640.splitdumb.repository.GrupoRepository;
 import br.com.hiago640.splitdumb.repository.PessoaRepository;
-import ch.qos.logback.core.model.Model;
 import jakarta.validation.Valid;
 
 @RestController

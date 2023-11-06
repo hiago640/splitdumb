@@ -1,6 +1,5 @@
 package br.com.hiago640.splitdumb.controller;
 
-import java.util.List;
 import java.util.Set;
 
 import org.slf4j.Logger;
@@ -11,7 +10,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.ModelAndView;
 
 import br.com.hiago640.splitdumb.model.Compra;
 import br.com.hiago640.splitdumb.model.Grupo;
@@ -24,9 +22,6 @@ import jakarta.validation.Valid;
 public class CompraController {
 
 	private static final Logger logger = LoggerFactory.getLogger(CompraController.class);
-	
-	@Autowired
-	private CompraRepository compraRepository;
 	
 	@Autowired
 	private GrupoRepository grupoRepository;

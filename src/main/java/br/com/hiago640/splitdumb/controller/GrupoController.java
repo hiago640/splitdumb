@@ -8,15 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.hiago640.splitdumb.model.Grupo;
-import br.com.hiago640.splitdumb.model.Pessoa;
-import br.com.hiago640.splitdumb.repository.CompraRepository;
 import br.com.hiago640.splitdumb.repository.GrupoRepository;
-import br.com.hiago640.splitdumb.repository.PessoaRepository;
-import br.com.hiago640.splitdumb.repository.queries.grupo.GrupoQueriesImpl;
 import jakarta.validation.Valid;
 
 @RestController
@@ -24,9 +19,6 @@ import jakarta.validation.Valid;
 public class GrupoController {
 
 	private static final Logger logger = LoggerFactory.getLogger(GrupoController.class);
-	
-	@Autowired
-	private CompraRepository compraRepository;
 	
 	@Autowired
 	private GrupoRepository grupoRepository;
