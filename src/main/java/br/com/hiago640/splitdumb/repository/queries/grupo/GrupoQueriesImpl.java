@@ -28,10 +28,10 @@ public class GrupoQueriesImpl implements GrupoQueries {
 
 		Grupo grupo = query.getSingleResult();
 		logger.debug("Grupo buscados no BD: {}", grupo);
-		
+
 		return grupo;
 	}
-	
+
 	@Override
 	public List<Grupo> buscarComCompras() {
 		logger.info("Entrou no método buscarComCompras");
@@ -41,7 +41,7 @@ public class GrupoQueriesImpl implements GrupoQueries {
 
 		List<Grupo> grupos = query.getResultList();
 		logger.info("Grupos buscados no BD: {}", grupos);
-		
+
 		return grupos;
 	}
 

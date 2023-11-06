@@ -29,11 +29,11 @@ public class Grupo implements Serializable {
 
 	@NotBlank(message = "O nome do Grupo não pode ficar vazio")
 	private String nome;
-	
+
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "grupo")
 	@JsonManagedReference
-    private Set<Compra> compras = new HashSet<>();
-	
+	private Set<Compra> compras = new HashSet<>();
+
 	public long getId() {
 		return id;
 	}

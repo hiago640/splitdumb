@@ -22,28 +22,28 @@ import jakarta.validation.Valid;
 public class CompraController {
 
 	private static final Logger logger = LoggerFactory.getLogger(CompraController.class);
-	
+
 	@Autowired
 	private GrupoRepository grupoRepository;
-	
+
 	@GetMapping("/buscar/")
-	public Set<Compra> buscaComprasPorGrupo(@RequestParam("idGrupo") Long idGrupo){
+	public Set<Compra> buscaComprasPorGrupo(@RequestParam("idGrupo") Long idGrupo) {
 		logger.info("entrou em buscaComprasPorGrupo");
 		logger.info("idGrupo recebido: {}", idGrupo);
 		Grupo grupo = grupoRepository.buscarComComprasByID(idGrupo);
-		
+
 		logger.info("grupo localizado: {}", grupo);
 		logger.info("grupo com compras localizados: {}", grupo.getCompras());
-		
+
 		return grupo.getCompras();
 	}
-	
+
 	@PostMapping("/criar")
 	public Compra novaCompra(@Valid Compra compra) {
 		logger.info("entrou em novaCompra");
 		Grupo grupo = compra.getGrupo();
 		grupo.getCompras().add(compra);
-		
+
 		logger.info("compra criada: {}", compra);
 		grupoRepository.save(grupo);
 

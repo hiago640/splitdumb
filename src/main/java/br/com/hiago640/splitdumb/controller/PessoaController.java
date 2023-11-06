@@ -23,7 +23,7 @@ import jakarta.validation.Valid;
 public class PessoaController {
 
 	private static final Logger logger = LoggerFactory.getLogger(PessoaController.class);
-	
+
 	@Autowired
 	private PessoaRepository pessoaRepository;
 
@@ -34,17 +34,17 @@ public class PessoaController {
 	public List<Pessoa> buscarPessoas() {
 		return pessoaRepository.findAll();
 	}
-	
+
 	@PostMapping("/cadastra")
 	public ModelAndView pagina(Pessoa pessoa) {
 		logger.info("pessoa recebida {}", pessoa.getNome());
 		ModelAndView model = new ModelAndView("cadastrapessoa");
 		model.addObject("pessoa", pessoa);
-		
+
 		pessoaRepository.save(pessoa);
-		
+
 		return model;
-		
+
 	}
 
 	@PostMapping("/criar")
@@ -57,6 +57,7 @@ public class PessoaController {
 	@PostMapping("/join")
 	public Pessoa joinGrupo(@RequestParam(name = "idPessoa") long idPessoa,
 			@RequestParam(name = "idGrupo") long idGrupo) {
+
 		Pessoa pessoa = pessoaRepository.findById(idPessoa).orElse(null);
 		Grupo grupo = grupoRepository.buscarComComprasByID(idGrupo);
 
@@ -68,6 +69,7 @@ public class PessoaController {
 			}
 
 		}
+
 		return pessoa;
 	}
 

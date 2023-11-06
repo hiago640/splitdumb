@@ -10,7 +10,7 @@ public class IndexController {
 
 	private static final Logger logger = LoggerFactory.getLogger(IndexController.class);
 
-	@GetMapping(value = {"/", "/index.html"} )
+	@GetMapping(value = { "/", "/index.html" })
 	public String index() {
 		logger.trace(">>>>>>>>>>>>>>>> Entrou em index");
 		logger.trace(">>>>>>>>>>>>>>>> Encaminhando para a view index");

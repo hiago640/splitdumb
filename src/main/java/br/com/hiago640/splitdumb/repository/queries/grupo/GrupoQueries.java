@@ -7,7 +7,7 @@ import br.com.hiago640.splitdumb.model.Grupo;
 public interface GrupoQueries {
 
 	public List<Grupo> buscarComCompras();
-	
+
 	public Grupo buscarComComprasByID(Long id);
-	
+
 }
