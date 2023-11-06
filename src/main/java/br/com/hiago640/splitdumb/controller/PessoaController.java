@@ -40,7 +40,7 @@ public class PessoaController {
 
 		logger.info("pessoa recebida {}", pessoa.getNome());
 
-		ModelAndView model = new ModelAndView("cadastrapessoa");
+		ModelAndView model = new ModelAndView("pessoa/cadastrapessoa");
 		model.addObject("pessoa", pessoa);
 
 		pessoaRepository.save(pessoa);

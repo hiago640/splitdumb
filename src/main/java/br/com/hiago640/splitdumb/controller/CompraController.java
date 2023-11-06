@@ -10,10 +10,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
 import br.com.hiago640.splitdumb.model.Compra;
 import br.com.hiago640.splitdumb.model.Grupo;
-import br.com.hiago640.splitdumb.repository.CompraRepository;
 import br.com.hiago640.splitdumb.repository.GrupoRepository;
 import jakarta.validation.Valid;
 
@@ -40,12 +40,27 @@ public class CompraController {
 		return grupo.getCompras();
 	}
 
+
+	@PostMapping("/cadastra")
+	public ModelAndView pagina(Compra compra) {
+
+		logger.info("compra recebida {}", compra);
+
+		ModelAndView model = new ModelAndView("compra/cadastracompra");
+		model.addObject("compra", compra);
+
+		return model;
+
+	}
+
 	@PostMapping("/criar")
 	public Compra novaCompra(@Valid Compra compra) {
 
 		logger.info("entrou em novaCompra");
 
 		Grupo grupo = compra.getGrupo();
+        logger.info("grupo: {}", grupo);
+
 		grupo.getCompras().add(compra);
 
 		logger.info("compra criada: {}", compra);

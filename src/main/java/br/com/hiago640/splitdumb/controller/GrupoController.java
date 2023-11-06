@@ -9,8 +9,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
 import br.com.hiago640.splitdumb.model.Grupo;
+import br.com.hiago640.splitdumb.model.Pessoa;
 import br.com.hiago640.splitdumb.repository.GrupoRepository;
 import jakarta.validation.Valid;
 
@@ -28,6 +30,20 @@ public class GrupoController {
 
 		logger.info("entrou em buscarGrupos");
 		return grupoRepository.buscarComCompras();
+
+	}
+
+	@PostMapping("/cadastra")
+	public ModelAndView pagina(Grupo grupo) {
+
+		logger.info("grupo recebido {}", grupo.getNome());
+
+		ModelAndView model = new ModelAndView("grupo/cadastragrupo");
+		model.addObject("grupo", grupo);
+
+		grupoRepository.save(grupo);
+
+		return model;
 
 	}
 
