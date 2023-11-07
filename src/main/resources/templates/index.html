@@ -1,69 +1,71 @@
 <!DOCTYPE html>
 <html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>Splitdump</title>
-</head>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport"
+			content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+		<title>Splitdump</title>
+	</head>
 
-<body>
-    <h1>Splitdump</h1>
+	<body>
+		<h1>Splitdump</h1>
 
-    <h1>Cadastrar Pessoas</h1>
+		<h1>Cadastrar Pessoas</h1>
 
-    <form th:action="@{api/splitdumb/pessoas/cadastra}" method="post">
-        <label>Nome de usuário</label><br>
-        <input type="text" name="nome" id="nome" placeholder="Digite seu nome">
-        <br>
+		<form th:action="@{api/splitdumb/pessoas/cadastra}" method="post">
+			<label>Nome de usuário</label><br>
+			<input type="text" name="nome" id="nome"
+				placeholder="Digite seu nome">
+			<br>
 
-        <label>E-mail</label><br>
-        <input type="email" name="email" id="email" placeholder="E-mail">
-        <br>
+			<label>E-mail</label><br>
+			<input type="email" name="email" id="email" placeholder="E-mail">
+			<br>
 
-        <label>Senha do usuário</label><br>
-        <input type="password" name="senha" id="senha" placeholder="Digite sua senha">
-        <br>
-        <br>
-        <input type="submit" value="Enviar">
-    </form>
+			<label>Senha do usuário</label><br>
+			<input type="password" name="senha" id="senha"
+				placeholder="Digite sua senha">
+			<br>
+			<br>
+			<input type="submit" value="Enviar">
+		</form>
 
-    <h1>Cadastrar Grupo</h1>
+		<h1>Cadastrar Grupo</h1>
 
-    <form th:action="@{api/splitdumb/grupos/cadastra}" method="post">
+		<form th:action="@{api/splitdumb/grupos/cadastra}" method="post">
 
-        <label>Nome do Grupo</label><br>
-        <input type="text" name="nome" id="nome">
-        <br>
-        <input type="submit" value="Enviar">
+			<label>Nome do Grupo</label><br>
+			<input type="text" name="nome" id="nome">
+			<br>
+			<input type="submit" value="Enviar">
 
-    </form>
+		</form>
 
-    <h1>Cadastrar Compra</h1>
+		<h1>Cadastrar Compra</h1>
 
-    <form th:action="@{api/splitdumb/compras/cadastra}" method="post">
+		<form th:action="@{api/splitdumb/compras/cadastra}" method="post">
 
-        <label>Selecione o grupo</label><br>
-        <select id="grupo" name="grupo" th:field="*{grupos}">
-            <option th:each="grupo : ${grupos}" th:value="${grupo.id}" th:text="${grupo.id} + ' - ' + ${grupo.nome}" selected="selected"></option>
-        </select>
+			<label th:for="${#ids.next('grupo')}">Grupo</label>
+			<select th:name="grupo">
+				<option value=" "> Selecione um grupo </option>
+				<option th:each="g : ${grupos}" th:value="${g.id}"
+					th:text="${g.nome}"> Vacina X </option>
+			</select>
 
-        <br>
+			<br>
 
-        <label>Descrição da Compra</label>
-        <input type="text" name="descricao" id="descricao">
+			<label>Descrição da Compra</label>
+			<input type="text" name="descricao" id="descricao">
 
-        <br>
+			<br>
 
-        <label>Valor da Compra</label>
-        <input type="text" name="valorCompra" id="valorCompra">
-        <input type="submit" value="Enviar">
+			<label>Valor da Compra</label>
+			<input type="text" name="valorCompra" id="valorCompra">
+			<input type="submit" value="Enviar">
 
-    </form>
+		</form>
 
-
-
-
-</body>
+	</body>
 
 </html>

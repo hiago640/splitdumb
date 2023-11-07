@@ -6,9 +6,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -26,8 +26,8 @@ public class CompraController {
 	@Autowired
 	private GrupoRepository grupoRepository;
 
-	@GetMapping("/buscar/")
-	public Set<Compra> buscaComprasPorGrupo(@RequestParam("idGrupo") Long idGrupo) {
+	@GetMapping("/{idGrupo}")
+	public Set<Compra> buscaComprasPorGrupo(@PathVariable("idGrupo") long idGrupo) {
 
 		logger.info("entrou em buscaComprasPorGrupo");
 		logger.info("idGrupo recebido: {}", idGrupo);
@@ -40,32 +40,23 @@ public class CompraController {
 		return grupo.getCompras();
 	}
 
+	@PostMapping("/")
+	public ModelAndView create(@Valid Compra compra) {
 
-	@PostMapping("/cadastra")
-	public ModelAndView pagina(Compra compra) {
-
+		logger.info("entrou em create compra");
 		logger.info("compra recebida {}", compra);
 
-		ModelAndView model = new ModelAndView("compra/cadastracompra");
-		model.addObject("compra", compra);
-
-		return model;
-
-	}
-
-	@PostMapping("/criar")
-	public Compra novaCompra(@Valid Compra compra) {
-
-		logger.info("entrou em novaCompra");
-
 		Grupo grupo = compra.getGrupo();
-        logger.info("grupo: {}", grupo);
+		logger.info("grupo: {}", grupo);
 
 		grupo.getCompras().add(compra);
 
 		logger.info("compra criada: {}", compra);
 		grupoRepository.save(grupo);
 
-		return compra;
+		ModelAndView model = new ModelAndView("compra/cadastracompra");
+		model.addObject("compra", compra);
+
+		return model;
 	}
 }

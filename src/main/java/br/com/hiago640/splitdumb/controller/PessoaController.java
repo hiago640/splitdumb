@@ -30,13 +30,19 @@ public class PessoaController {
 	@Autowired
 	private GrupoRepository grupoRepository;
 
-	@GetMapping("/buscar")
+	@GetMapping("/")
 	public List<Pessoa> buscarPessoas() {
 		return pessoaRepository.findAll();
 	}
 
-	@PostMapping("/cadastra")
-	public ModelAndView pagina(Pessoa pessoa) {
+    @GetMapping("/")
+	public List<Pessoa> buscarPessoas() {
+		return pessoaRepository.findAll();
+	}
+
+	@PostMapping("/")
+	public ModelAndView create(Pessoa pessoa) {
+        logger.info("Entrou em create pessoa");
 
 		logger.info("pessoa recebida {}", pessoa.getNome());
 
@@ -47,13 +53,6 @@ public class PessoaController {
 
 		return model;
 
-	}
-
-	@PostMapping("/criar")
-	public Pessoa novaPessoa(@Valid Pessoa pessoa) {
-		pessoaRepository.save(pessoa);
-
-		return pessoa;
 	}
 
 	@PostMapping("/join")
