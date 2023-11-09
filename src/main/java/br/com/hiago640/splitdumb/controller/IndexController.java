@@ -26,8 +26,6 @@ public class IndexController {
 		logger.trace(">>>>>>>>>>>>>>>> Encaminhando para a view index");
 		
         List<Grupo> grupos = grupoRepository.findAll();
-        // logger.info("grupos encontrados: {}", grupos);
-
 
         ModelAndView model = new ModelAndView("index");
         model.addObject("grupos", grupos);

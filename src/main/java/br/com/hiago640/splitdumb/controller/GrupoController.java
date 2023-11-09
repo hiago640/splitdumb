@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 @RestController
-@RequestMapping("api/splitdumb/groups")
+@RequestMapping("api/splitdumb/grupos")
 public class GrupoController {
 
 	private static final Logger logger = LoggerFactory.getLogger(

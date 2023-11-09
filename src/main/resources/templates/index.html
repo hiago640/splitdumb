@@ -13,7 +13,7 @@
 
 		<h1>Cadastrar Pessoas</h1>
 
-		<form th:action="@{api/splitdumb/pessoas/cadastra}" method="post">
+		<form th:action="@{api/splitdumb/pessoas/}" method="post">
 			<label>Nome de usuário</label><br>
 			<input type="text" name="nome" id="nome"
 				placeholder="Digite seu nome">
@@ -33,7 +33,7 @@
 
 		<h1>Cadastrar Grupo</h1>
 
-		<form th:action="@{api/splitdumb/grupos/cadastra}" method="post">
+		<form th:action="@{api/splitdumb/grupos/}" method="post">
 
 			<label>Nome do Grupo</label><br>
 			<input type="text" name="nome" id="nome">
@@ -44,10 +44,10 @@
 
 		<h1>Cadastrar Compra</h1>
 
-		<form th:action="@{api/splitdumb/compras/cadastra}" method="post">
+		<form th:action="@{api/splitdumb/compras/}" method="post">
 
 			<label th:for="${#ids.next('grupo')}">Grupo</label>
-			<select th:name="grupo">
+			<select th:name="grupo" name="grupo" id="grupo">
 				<option value=" "> Selecione um grupo </option>
 				<option th:each="g : ${grupos}" th:value="${g.id}"
 					th:text="${g.nome}"> Vacina X </option>
