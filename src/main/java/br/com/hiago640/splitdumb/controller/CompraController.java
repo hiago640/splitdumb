@@ -55,7 +55,7 @@ public class CompraController {
 		compra.setGrupo(grupo);
 
 		logger.info("compra criada: {}", compra);
-		compraRepository.save(compra);
+		grupoRepository.save(grupo);
 
 		ModelAndView model = new ModelAndView("compra/cadastracompra");
 		model.addObject("compra", compra);

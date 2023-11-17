@@ -1,11 +1,8 @@
 package br.com.hiago640.splitdumb.controller;
 
-import br.com.hiago640.splitdumb.model.Grupo;
-import br.com.hiago640.splitdumb.model.Pessoa;
-import br.com.hiago640.splitdumb.repository.GrupoRepository;
-import br.com.hiago640.splitdumb.repository.PessoaRepository;
-import jakarta.validation.Valid;
 import java.util.List;
+import java.util.Optional;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,9 +10,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
+
+import br.com.hiago640.splitdumb.model.Grupo;
+import br.com.hiago640.splitdumb.model.Pessoa;
+import br.com.hiago640.splitdumb.repository.GrupoRepository;
+import br.com.hiago640.splitdumb.repository.PessoaRepository;
 
 @RestController
 @RequestMapping("api/splitdumb/pessoas")
@@ -35,8 +36,8 @@ public class PessoaController {
 	}
 
 	@GetMapping("/{id}")
-	public List<Pessoa> buscarPessoasByID(@PathVariable("id") long id) {
-		return pessoaRepository.findAll();
+	public Optional<Pessoa> buscarPessoasByID(@PathVariable("id") long id) {
+		return pessoaRepository.findById(id);
 	}
 
 	@PostMapping("/")
@@ -53,10 +54,9 @@ public class PessoaController {
 		return model;
 	}
 
-	@PostMapping("/join")
+	@PostMapping("/join/{idPessoa}-{idGrupo}")
 	public Pessoa joinGrupo(
-			@RequestParam(name = "idPessoa") long idPessoa,
-			@RequestParam(name = "idGrupo") long idGrupo) {
+			@PathVariable("idPessoa") long idPessoa, @PathVariable("idGrupo") long idGrupo) {
 		Pessoa pessoa = pessoaRepository.findById(idPessoa).orElse(null);
 		Grupo grupo = grupoRepository.buscarComComprasByID(idGrupo);
 

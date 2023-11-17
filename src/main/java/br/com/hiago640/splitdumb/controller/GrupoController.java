@@ -3,6 +3,8 @@ package br.com.hiago640.splitdumb.controller;
 import br.com.hiago640.splitdumb.model.Grupo;
 import br.com.hiago640.splitdumb.repository.GrupoRepository;
 import java.util.List;
+import java.util.Optional;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,9 +32,9 @@ public class GrupoController {
 	}
 
 	@GetMapping("/{id}")
-	public Grupo buscarGrupo(@PathVariable("id") long id) {
+	public Optional<Grupo> buscarGrupo(@PathVariable("id") long id) {
 		logger.info("entrou em buscarGrupo");
-		return grupoRepository.findById(id).get();
+		return grupoRepository.findById(id);
 	}
 
 	@PostMapping("/")

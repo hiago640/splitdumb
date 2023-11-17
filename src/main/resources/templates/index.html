@@ -54,6 +54,15 @@
 			</select>
 
 			<br>
+			
+			<label th:for="${#ids.next('comprador')}">Comprador</label>
+			<select th:name="comprador" name="comprador" id="comprador">
+				<option value=" "> Selecione um Comprador </option>
+				<option th:each="p : ${pessoas}" th:value="${p.id}"
+					th:text="${p.nome}"> Vacina X </option>
+			</select>
+
+			<br>
 
 			<label>Descrição da Compra</label>
 			<input type="text" name="descricao" id="descricao">
