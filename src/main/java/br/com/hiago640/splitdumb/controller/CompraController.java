@@ -4,6 +4,7 @@ import br.com.hiago640.splitdumb.model.Compra;
 import br.com.hiago640.splitdumb.model.Grupo;
 import br.com.hiago640.splitdumb.repository.CompraRepository;
 import br.com.hiago640.splitdumb.repository.GrupoRepository;
+import br.com.hiago640.splitdumb.service.GrupoService;
 import jakarta.validation.Valid;
 import java.util.Set;
 import org.slf4j.Logger;
@@ -15,6 +16,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.view.RedirectView;
 
 @RestController
 @RequestMapping("api/splitdumb/compras")
@@ -28,6 +31,9 @@ public class CompraController {
 
 	@Autowired
 	private GrupoRepository grupoRepository;
+	
+	@Autowired
+	private GrupoService grupoService;
 
 	@GetMapping("/{idGrupo}")
 	public Set<Compra> buscaComprasPorGrupo(
@@ -44,7 +50,7 @@ public class CompraController {
 	}
 
 	@PostMapping("/")
-	public ModelAndView create(@Valid Compra compra) {
+	public RedirectView create(@Valid Compra compra, RedirectAttributes redirectAttributes) {
 		logger.info("entrou em create compra");
 		logger.info("compra recebida {}", compra);
 
@@ -54,12 +60,11 @@ public class CompraController {
 		grupo.getCompras().add(compra);
 		compra.setGrupo(grupo);
 
-		logger.info("compra criada: {}", compra);
-		grupoRepository.save(grupo);
+		grupoService.salvar(grupo);
 
-		ModelAndView model = new ModelAndView("compra/cadastracompra");
-		model.addObject("compra", compra);
-
-		return model;
+		String mensagem = String.format("A compra %s foi cadastrada com sucesso!", compra.getDescricao());
+		redirectAttributes.addFlashAttribute("mensagem", mensagem);
+		logger.trace("Redirecionando para a URL /mostrarmensagem");
+		return new RedirectView("/mostrarmensagem");
 	}
 }

@@ -19,25 +19,32 @@ public class IndexController {
 
 	private static final Logger logger = LoggerFactory.getLogger(IndexController.class);
 
-    @Autowired
-    private GrupoRepository grupoRepository;
+	@Autowired
+	private GrupoRepository grupoRepository;
 
 	@Autowired
-    private PessoaRepository pessoaRepository;
+	private PessoaRepository pessoaRepository;
 
 	@GetMapping(value = { "/", "/index.html" })
 	public ModelAndView index() {
 		logger.trace(">>>>>>>>>>>>>>>> Entrou em index");
 		logger.trace(">>>>>>>>>>>>>>>> Encaminhando para a view index");
-		
-        List<Grupo> grupos = grupoRepository.findAll();
+
+		List<Grupo> grupos = grupoRepository.findAll();
 		List<Pessoa> pessoas = pessoaRepository.findAll();
 
-        ModelAndView model = new ModelAndView("index");
-        model.addObject("grupos", grupos);
+		ModelAndView model = new ModelAndView("index");
+		model.addObject("grupos", grupos);
 		model.addObject("pessoas", pessoas);
-        
-        return model;
+
+		return model;
+	}
+
+	@GetMapping("/mostrarmensagem")
+	public String mostrarMensagem() {
+		logger.trace("Entrou em mostrarMensagem");
+		logger.trace("Encaminhando para a view mostrarmensagem");
+		return "mostrarmensagem";
 	}
 
 }

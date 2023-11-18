@@ -11,12 +11,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.view.RedirectView;
 
 import br.com.hiago640.splitdumb.model.Grupo;
 import br.com.hiago640.splitdumb.model.Pessoa;
 import br.com.hiago640.splitdumb.repository.GrupoRepository;
 import br.com.hiago640.splitdumb.repository.PessoaRepository;
+import br.com.hiago640.splitdumb.service.PessoaService;
 
 @RestController
 @RequestMapping("api/splitdumb/pessoas")
@@ -30,6 +32,9 @@ public class PessoaController {
 	@Autowired
 	private GrupoRepository grupoRepository;
 
+	@Autowired
+	private PessoaService pessoaService;
+
 	@GetMapping("/")
 	public List<Pessoa> buscarPessoas() {
 		return pessoaRepository.findAll();
@@ -41,22 +46,20 @@ public class PessoaController {
 	}
 
 	@PostMapping("/")
-	public ModelAndView create(Pessoa pessoa) {
+	public RedirectView create(Pessoa pessoa, RedirectAttributes redirectAttributes) {
 		logger.info("Entrou em create pessoa");
-
 		logger.info("pessoa recebida {}", pessoa.getNome());
+		pessoaService.salvar(pessoa);
 
-		ModelAndView model = new ModelAndView("pessoa/cadastrapessoa");
-		model.addObject("pessoa", pessoa);
-
-		pessoaRepository.save(pessoa);
-
-		return model;
+		String mensagem = String.format("A Pessoa %s foi cadastrada com sucesso!", pessoa.getNome());
+		redirectAttributes.addFlashAttribute("mensagem", mensagem);
+		logger.trace("Redirecionando para a URL /mostrarmensagem");
+		return new RedirectView("/mostrarmensagem");
 	}
 
 	@PostMapping("/join/{idPessoa}-{idGrupo}")
-	public Pessoa joinGrupo(
-			@PathVariable("idPessoa") long idPessoa, @PathVariable("idGrupo") long idGrupo) {
+	public Pessoa joinGrupo(@PathVariable("idPessoa") long idPessoa, @PathVariable("idGrupo") long idGrupo) {
+		logger.info("entrou em joinGrupo");
 		Pessoa pessoa = pessoaRepository.findById(idPessoa).orElse(null);
 		Grupo grupo = grupoRepository.buscarComComprasByID(idGrupo);
 
