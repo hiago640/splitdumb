@@ -27,7 +27,7 @@ public class Pessoa implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 
-	@NotBlank(message = "O Nome deve ser preenchido.")
+//	@NotBlank(message = "O Nome deve ser preenchido.")
 	private String nome;
 	private String email;
 	private String senha;

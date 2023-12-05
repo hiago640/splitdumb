@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
+    />
+    <title>Grupos</title>
+  </head>
+  <body>
+    <h1>Grupos Encontrados(s)</h1>
+    <hr />
+
+    <table border="2" bordercolor="green">
+      <thead>
+        <th>ID</th>
+        <th>Nome</th>
+		<th>Compras</th>
+      </thead>
+      <tbody>
+        <tr th:each="grupo : ${grupos}" th:object="${grupo}">
+          <td th:text="*{id}"></td>
+          <td th:text="*{nome}"></td>
+
+
+        </tr>
+      </tbody>
+    </table>
+
+    <a th:href="@{/api/splitdumb/grupos/pesquisar}"> Voltar</a>
+  </body>
+</html>

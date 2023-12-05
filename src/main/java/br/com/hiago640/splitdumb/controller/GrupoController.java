@@ -4,6 +4,7 @@ import br.com.hiago640.splitdumb.model.Grupo;
 import br.com.hiago640.splitdumb.repository.GrupoRepository;
 import br.com.hiago640.splitdumb.service.GrupoService;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.View;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
@@ -32,10 +34,25 @@ public class GrupoController {
 	@Autowired
 	private GrupoService grupoService;
 
-	@GetMapping("/")
-	public List<Grupo> buscarGrupos() {
-		logger.info("entrou em buscarGrupos");
-		return grupoRepository.buscarComCompras();
+	@GetMapping("/pesquisar")
+	public ModelAndView abrirPesquisa() {
+		logger.info("entrou em abrirPesquisa");
+		logger.info("entrou encaminhando para view: grupo/pesquisar");
+		
+		return new ModelAndView("grupo/pesquisar");
+	}
+
+	@PostMapping("/pesquisar")
+	public ModelAndView pesquisar() {
+		logger.info("entrou em pesquisar");
+		logger.trace(">>>>>>>>>>>>>>>> Encaminhando para a view grupo/mostrargrupos");
+		
+		ModelAndView modelAndView = new ModelAndView("grupo/mostrargrupos");
+		List<Grupo> grupos = grupoRepository.buscarComCompras();
+
+		modelAndView.addObject("grupos", grupos);
+		
+		return modelAndView;
 	}
 
 	@GetMapping("/{id}")

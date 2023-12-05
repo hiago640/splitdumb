@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
@@ -19,6 +20,7 @@ import br.com.hiago640.splitdumb.model.Pessoa;
 import br.com.hiago640.splitdumb.repository.GrupoRepository;
 import br.com.hiago640.splitdumb.repository.PessoaRepository;
 import br.com.hiago640.splitdumb.service.PessoaService;
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("api/splitdumb/pessoas")
@@ -35,9 +37,20 @@ public class PessoaController {
 	@Autowired
 	private PessoaService pessoaService;
 
-	@GetMapping("/")
-	public List<Pessoa> buscarPessoas() {
-		return pessoaRepository.findAll();
+	@GetMapping("/pesquisar")
+	public ModelAndView buscarPessoas(@Valid Pessoa pessoa) {
+		
+		logger.trace(">>>>>>>>>>>>>>>> Entrou no método buscarPessoas");
+		logger.trace(">>>>>>>>>>>>>>>> Encaminhando para a view pessoa/mostrartodos");
+		
+		ModelAndView mv = new ModelAndView("pessoa/mostrartodos");
+		
+		List<Pessoa> pessoas = pessoaRepository.findAll(); 
+		
+		mv.addObject("pessoas", pessoas);
+		
+		return mv;
+		
 	}
 
 	@GetMapping("/{id}")

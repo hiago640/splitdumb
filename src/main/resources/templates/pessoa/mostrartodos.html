@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+<title>Pessoas</title>
+</head>
+<body>
+	<h1>Pessoas Encontrada(s)</h1>
+	<hr>
+
+	<table>
+		<thead>
+			<th>ID</th>
+			<th>Nome</th>
+			<th>E-mail</th>
+		</thead>
+		<tbody>
+			<tr th:each="pessoa : ${pessoas}" th:object="${pessoa}">
+				<td th:text="*{id}"></td>
+				<td th:text="*{nome}"></td>
+				<td th:text="*{email}"></td>
+			</tr>
+		</tbody>
+	</table>
+
+	<a th:href="@{/vacinas/pesquisar}"> Voltar</a>
+</body>
+</html>

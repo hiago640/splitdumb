@@ -29,10 +29,10 @@ public class Compra implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 
-	@NotBlank(message = "O Nome do Compra deve ser preenchido.")
+//	@NotBlank(message = "O Nome do Compra deve ser preenchido.")
 	private String descricao;
 
-	@Min(value = 0, message = "O valor mínimo da compra é 0(Zero)")
+//	@Min(value = 0, message = "O valor mínimo da compra é 0(Zero)")
 	private BigDecimal valorCompra;
 
 	@ManyToOne
