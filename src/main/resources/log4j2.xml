@@ -34,7 +34,7 @@
 			<AppenderRef ref="Console" />
 			<!-- <AppenderRef ref="Arquivo" /> -->
 		</AsyncRoot>
-		<AsyncLogger name="hiago640.splitdumb" level="trace" additivity="false">
+		<AsyncLogger name="br.com.hiago640.splitdumb" level="trace" additivity="false">
 			<AppenderRef ref="Console" />
 		</AsyncLogger>
 		<!-- Log SQL statements -->
