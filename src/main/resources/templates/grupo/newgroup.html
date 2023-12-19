@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Splitdumb</title>
+</head>
+<body>
+	<h1>Cadastro de Grupos</h1>
+	
+	<form th:action="@{/grupo/new}" method="post" th:object="${grupo}">
+	  <label>Nome do Grupo</label><br>
+	  <input type="text" th:field="*{nome}" placeholder="Digite o nome do Grupo">
+	  <br>	  
+	  <br>
+	  <input type="submit" value="Enviar">
+	</form>
+	<br>
+	
+	<a href="#" th:href="@{/}"> Voltar </a>
+</body>
+</html>

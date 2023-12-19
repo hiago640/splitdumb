@@ -3,9 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>Spring MVC com Spring Boot</title>
+    <title>Splitdumb</title>
 </head>
 <body>
-	<h1>Bem vindo ao Spring Boot!</h1>
+	<h1>Bem vindo ao Splitdumb!</h1>
+	
+	<h2>Usuário</h2>
+	<a th:href=@{/pessoa/new}>Cadastrar novo Usuário</a>
+	<br>
+	<a th:href=@{/pessoa/list}>Listar Usuários cadastrados</a>
+	<br>
+	
+	<h2>Grupos</h2>
+	<a th:href=@{/grupo/new}>Cadastrar novo Grupo</a><br>
+	<a th:href=@{/grupo/list}>Listar Grupos cadastrados</a>
+	<a th:href=@{/grupo/join}>Entrar em um Grupo </a>
+	
 </body>
 </html>

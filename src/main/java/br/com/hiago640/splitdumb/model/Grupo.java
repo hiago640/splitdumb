@@ -2,52 +2,66 @@ package br.com.hiago640.splitdumb.model;
 
 import java.io.Serializable;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
+import java.util.UUID;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
-import jakarta.validation.constraints.NotBlank;
+import org.hibernate.annotations.DynamicUpdate;
+import org.hibernate.annotations.Type;
 
 @Entity
 @Table(name = "grupos")
+@DynamicUpdate
 public class Grupo implements Serializable {
 
 	private static final long serialVersionUID = -1789779693050921664L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long id;
+	@GeneratedValue(generator = "UUID")
+	@Type(type = "uuid-char") // Esta linha configura a coluna como VARCHAR
+	private UUID codigo;
 
-	@NotBlank(message = "O nome do Grupo não pode ficar vazio")
 	private String nome;
 
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "grupo")
-	@JsonManagedReference
+	@ManyToMany(fetch = FetchType.LAZY)
+	private List<Pessoa> participantes;
+//	@ManyToMany
+//	private List<Pessoa> participantes;
+
+	@OneToMany(fetch = FetchType.LAZY)
 	private Set<Compra> compras = new HashSet<>();
 
-	public long getId() {
-		return id;
+	public UUID getCodigo() {
+		return codigo;
 	}
 
-	public void setId(long id) {
-		this.id = id;
+	public void setCodigo(UUID codigo) {
+		this.codigo = codigo;
 	}
 
 	public String getNome() {
 		return nome;
 	}
 
-	public void setNome(String nomeGrupo) {
-		this.nome = nomeGrupo;
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+
+	public List<Pessoa> getParticipantes() {
+		return participantes;
+	}
+
+	public void setParticipantes(List<Pessoa> participantes) {
+		this.participantes = participantes;
 	}
 
 	public Set<Compra> getCompras() {
@@ -60,24 +74,22 @@ public class Grupo implements Serializable {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(id);
+		return Objects.hash(codigo);
 	}
 
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
+		if (!(obj instanceof Grupo))
 			return false;
 		Grupo other = (Grupo) obj;
-		return id == other.id;
+		return Objects.equals(codigo, other.codigo);
 	}
 
 	@Override
 	public String toString() {
-		return String.format("Grupo [id=%s, nome=%s, compras=%s]", id, nome, compras);
+		return String.format("Grupo [codigo=%s, nome=%s]", codigo, nome);
 	}
 
 }

@@ -4,10 +4,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import br.com.hiago640.splitdumb.model.Pessoa;
 import br.com.hiago640.splitdumb.repository.PessoaRepository;
-import jakarta.transaction.Transactional;
 
 @Service
 public class PessoaService {
@@ -38,14 +38,14 @@ public class PessoaService {
 		logger.trace(">>>>>>>>>>>>>>>> Pessoa alterada!");
 
 	}
-
-	@Transactional
-	public void remover(Long id) {
-		logger.trace(">>>>>>>>>>>>>>>> Entrou no método remover");
-		logger.trace(">>>>>>>>>>>>>>>> removendo a pessoa com o id: {}", id);
-
-		pessoaRepository.deleteById(id);
-
-		logger.trace(">>>>>>>>>>>>>>>> Pessoa removida");
-	}
+//
+//	@Transactional
+//	public void remover(Long id) {
+//		logger.trace(">>>>>>>>>>>>>>>> Entrou no método remover");
+//		logger.trace(">>>>>>>>>>>>>>>> removendo a pessoa com o id: {}", id);
+//
+//		pessoaRepository.deleteById(id);
+//
+//		logger.trace(">>>>>>>>>>>>>>>> Pessoa removida");
+//	}
 }

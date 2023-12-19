@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Splitdumb</title>
+</head>
+<body>
+	<h1>Entrar em um grupo</h1>
+	
+	<form action="#" th:action="@{/grupo/join}" method="post">
+		<h4>Usuários</h4>
+		<select name="pessoa" id="pessoa">
+			<option th:each="pessoa : ${pessoas}" th:value="${pessoa.codigo}" th:text="${pessoa.nome}">Usuário</option>
+		</select>
+	
+		<h4>Grupos</h4>
+		<select name="grupo" id="grupo">
+			<option th:each="grupo : ${grupos}" th:value="${grupo.codigo}" th:text="${grupo.nome}">Nome grupo</option>
+		</select>
+
+	<input type="submit" value="Enviar">
+	</form>
+	
+	<br>
+	<a href="#" th:href="@{/}"> Voltar </a>
+</body>
+</html>

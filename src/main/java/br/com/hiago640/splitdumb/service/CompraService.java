@@ -4,10 +4,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import br.com.hiago640.splitdumb.model.Compra;
 import br.com.hiago640.splitdumb.repository.CompraRepository;
-import jakarta.transaction.Transactional;
 
 @Service
 public class CompraService {
@@ -38,14 +38,14 @@ public class CompraService {
 		logger.trace(">>>>>>>>>>>>>>>> Compra alterada!");
 
 	}
-
-	@Transactional
-	public void remover(Long id) {
-		logger.trace(">>>>>>>>>>>>>>>> Entrou no método remover");
-		logger.trace(">>>>>>>>>>>>>>>> removendo a compra com o id: {}", id);
-		
-		compraRepository.deleteById(id);
-		
-		logger.trace(">>>>>>>>>>>>>>>> Compra removida");
-	}
+//
+//	@Transactional
+//	public void remover(Long id) {
+//		logger.trace(">>>>>>>>>>>>>>>> Entrou no método remover");
+//		logger.trace(">>>>>>>>>>>>>>>> removendo a compra com o id: {}", id);
+//		
+//		compraRepository.deleteById(id);
+//		
+//		logger.trace(">>>>>>>>>>>>>>>> Compra removida");
+//	}
 }

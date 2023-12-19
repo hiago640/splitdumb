@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Splitdumb</title>
+</head>
+<body>
+	<h1>Grupos cadastrados</h1>
+	
+	<div th:each="grupo : ${grupos}">
+	<hr>
+		<p>
+			<label for="codigo">Código: </label> 
+			<span th:text="${grupo.codigo}">123</span>
+		</p>
+		<p>
+			<label for="nome">Nome: </label> 
+			<span th:text="${grupo.nome}">Nome</span>
+		</p>
+		<div th:each="pessoa : ${grupo.participantes}">
+			<label for="nome">Nome: </label> 
+			<span th:text="${pessoa.nome}">Nome</span>
+		</div>			
+	</div>
+	<br>
+	<a href="#" th:href="@{/}"> Voltar </a>
+</body>
+</html>

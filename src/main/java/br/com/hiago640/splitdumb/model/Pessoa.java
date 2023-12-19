@@ -1,21 +1,17 @@
 package br.com.hiago640.splitdumb.model;
 
 import java.io.Serializable;
+import java.util.Objects;
 import java.util.Set;
+import java.util.UUID;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
-import jakarta.validation.constraints.NotBlank;
+import org.hibernate.annotations.Type;
 
 @Entity
 @Table(name = "pessoas")
@@ -24,28 +20,23 @@ public class Pessoa implements Serializable {
 	private static final long serialVersionUID = -1195022911056262828L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long id;
+	@GeneratedValue(generator = "UUID")
+	@Type(type = "uuid-char") // Esta linha configura a coluna como VARCHAR
+	private UUID codigo;
 
-//	@NotBlank(message = "O Nome deve ser preenchido.")
 	private String nome;
 	private String email;
 	private String senha;
 
-	@ManyToMany(fetch = FetchType.EAGER)
-	@JoinTable(name = "pessoa_grupo", joinColumns = @JoinColumn(name = "pessoa_id"), inverseJoinColumns = @JoinColumn(name = "grupo_id"))
-	@JsonManagedReference
+	@ManyToMany(mappedBy = "participantes")
 	private Set<Grupo> grupos;
 
-	@OneToMany(mappedBy = "comprador")
-	private Set<Compra> compras;
-
-	public long getId() {
-		return id;
+	public UUID getCodigo() {
+		return codigo;
 	}
 
-	public void setId(long id) {
-		this.id = id;
+	public void setCodigo(UUID codigo) {
+		this.codigo = codigo;
 	}
 
 	public String getNome() {
@@ -81,8 +72,23 @@ public class Pessoa implements Serializable {
 	}
 
 	@Override
+	public int hashCode() {
+		return Objects.hash(codigo);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!(obj instanceof Pessoa))
+			return false;
+		Pessoa other = (Pessoa) obj;
+		return Objects.equals(codigo, other.codigo);
+	}
+
+	@Override
 	public String toString() {
-		return String.format("Pessoa [id=%s, nome=%s, email=%s]", id, nome, email);
+		return String.format("Pessoa [codigo=%s, nome=%s, email=%s, senha=%s]", codigo, nome, email, senha);
 	}
 
 }

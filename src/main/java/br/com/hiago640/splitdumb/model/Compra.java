@@ -3,19 +3,17 @@ package br.com.hiago640.splitdumb.model;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Objects;
+import java.util.UUID;
 
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import org.hibernate.annotations.Type;
 
 @Entity
 @Table(name = "compras")
@@ -24,35 +22,28 @@ public class Compra implements Serializable {
 	private static final long serialVersionUID = -4732330819981756040L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long id;
+	@GeneratedValue(generator = "UUID")
+	@Type(type = "uuid-char") // Esta linha configura a coluna como VARCHAR
+	private UUID codigo;
 
-//	@NotBlank(message = "O Nome do Compra deve ser preenchido.")
 	private String descricao;
-
-//	@Min(value = 0, message = "O valor mínimo da compra é 0(Zero)")
 	private BigDecimal valorCompra;
 
 	@ManyToOne
-	@JsonBackReference
 	private Pessoa comprador;
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "grupo_id")
-	@JsonBackReference
-	private Grupo grupo;
-
 	@ManyToMany
-	@JsonBackReference
-	@JoinTable(name = "compra_envolvido")
 	private List<Pessoa> envolvidos;
 
-	public long getId() {
-		return id;
+	@ManyToOne
+	private Grupo grupo;
+
+	public UUID getCodigo() {
+		return codigo;
 	}
 
-	public void setId(long id) {
-		this.id = id;
+	public void setCodigo(UUID codigo) {
+		this.codigo = codigo;
 	}
 
 	public String getDescricao() {
@@ -63,20 +54,20 @@ public class Compra implements Serializable {
 		this.descricao = descricao;
 	}
 
-	public Pessoa getComprador() {
-		return comprador;
-	}
-
-	public void setComprador(Pessoa comprador) {
-		this.comprador = comprador;
-	}
-
 	public BigDecimal getValorCompra() {
 		return valorCompra;
 	}
 
 	public void setValorCompra(BigDecimal valorCompra) {
 		this.valorCompra = valorCompra;
+	}
+
+	public Pessoa getComprador() {
+		return comprador;
+	}
+
+	public void setComprador(Pessoa comprador) {
+		this.comprador = comprador;
 	}
 
 	public List<Pessoa> getEnvolvidos() {
@@ -96,9 +87,23 @@ public class Compra implements Serializable {
 	}
 
 	@Override
+	public int hashCode() {
+		return Objects.hash(codigo);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!(obj instanceof Compra))
+			return false;
+		Compra other = (Compra) obj;
+		return Objects.equals(codigo, other.codigo);
+	}
+
+	@Override
 	public String toString() {
-		return String.format("Compra [id=%s, descricao=%s, valorCompra=%s, comprador=%s]", id,
-				descricao, valorCompra, comprador);
+		return String.format("Compra [codigo=%s, descricao=%s, valorCompra=%s]", codigo, descricao, valorCompra);
 	}
 
 }
