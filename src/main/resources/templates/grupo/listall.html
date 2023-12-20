@@ -15,9 +15,10 @@
 			<span th:text="${grupo.codigo}">123</span>
 		</p>
 		<p>
-			<label for="nome">Nome: </label> 
+			<label for="nome">Nome do grupo: </label> 
 			<span th:text="${grupo.nome}">Nome</span>
 		</p>
+		<h4>Participantes</h4>
 		<div th:each="pessoa : ${grupo.participantes}">
 			<label for="nome">Nome: </label> 
 			<span th:text="${pessoa.nome}">Nome</span>
