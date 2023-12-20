@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Splitdumb</title>
+</head>
+<body>
+	<h1>Compras cadastradas</h1>
+	
+	<div th:each="compra : ${compras}">
+	<hr>
+		<p>
+			<label for="codigo">Código: </label> 
+			<span th:text="${compra.codigo}">123</span>
+		</p>
+		<p>
+			<label for="nome">Descrição da Compra: </label> 
+			<span th:text="${compra.descricao}">descricao</span>
+		</p>
+		<p>
+			<label for="valorCompra">Valor da Compra: </label> 
+			<span th:text="${{compra.valorCompra}}">Valor compra</span>
+		</p>
+		<p>
+			<label for="comprador">Comprador: </label> 
+			<span th:text="${compra.comprador.nome}">Comprador</span>
+		</p>
+		<p>
+			<label for="grupo">Grupo: </label> 
+			<span th:text="${compra.grupo.nome}">grupo</span>
+		</p>
+		<h4>Envolvidos</h4>
+		<div th:each="pessoa : ${compra.envolvidos}">
+			<label for="nome">Nome: </label> 
+			<span th:text="${pessoa.nome}">Nome</span>
+		</div>			
+	</div>
+	<br>
+	<a href="#" th:href="@{/}"> Voltar </a>
+</body>
+</html>

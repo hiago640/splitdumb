@@ -9,10 +9,12 @@ public interface GrupoQueries {
 
 	public List<Grupo> buscarComCompras();
 
-	public Grupo buscarComComprasByID(Long id);
+	public Grupo buscarComComprasByID(UUID id);
 	
 	public List<Grupo> buscarComParticipantes();
 	
 	public Grupo buscarComParticipantesByID(UUID id);
+	
+	public Grupo buscarComParticipantesECompraByID(UUID id);
 
 }

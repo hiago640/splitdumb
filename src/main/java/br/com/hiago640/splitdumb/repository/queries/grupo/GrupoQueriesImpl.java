@@ -21,10 +21,9 @@ public class GrupoQueriesImpl implements GrupoQueries {
 	private EntityManager manager;
 
 	@Override
-	public Grupo buscarComComprasByID(Long id) {
+	public Grupo buscarComComprasByID(UUID id) {
 		logger.trace("Entrou no método buscarComComprasByID");
-		logger.debug("Valor de ID receo"
-				+ "bido: {}", id);
+		logger.debug("Valor de ID recebido: {}", id);
 
 		String jpql = "select g from Grupo g LEFT join fetch g.compras where g.id = :id";
 		TypedQuery<Grupo> query = manager.createQuery(jpql, Grupo.class);
@@ -75,6 +74,21 @@ public class GrupoQueriesImpl implements GrupoQueries {
 
 		return grupo;
 		
+	}
+
+	@Override
+	public Grupo buscarComParticipantesECompraByID(UUID id) {
+		logger.info("Entrou no método buscarComParticipantesECompraByID");
+		logger.debug("Id recebido: {}", id);
+
+		String jpql = "SELECT distinct g FROM Grupo g LEFT JOIN FETCH g.participantes participantes LEFT JOIN FETCH g.compras compras where g.id = :id";
+		TypedQuery<Grupo> query = manager.createQuery(jpql, Grupo.class);
+		query.setParameter("id", id);
+		
+		Grupo grupo = query.getSingleResult();
+		logger.info("Grupo encontrado no BD: {}", grupo);
+
+		return grupo;
 	}
 
 }

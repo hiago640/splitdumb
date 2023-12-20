@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Splitdumb</title>
+</head>
+<body>
+	<h1>Cadastro de Compras</h1>
+	
+	<form th:action="@{/compra/new}" method="post">
+	
+		<label>Nome da Compra</label>
+			<input type="text" name="descricao" id="descricao" placeholder="Digite o nome da compra"/>
+		<br>
+		<label>Valor da Compra</label>
+			<input type="text" name="valorCompra" id="valorCompra" />
+		
+		<br>
+		<label>Escolha o Comprador</label>
+		<select name="comprador" id="comprador">
+			<option th:each="pessoa : ${grupo.participantes}"
+			 th:value="${pessoa.codigo}" 
+			 th:text="${pessoa.nome}">Nome Pessoa</option>
+		</select>
+		
+		<br><br>
+		
+		<label for="envolvidos">Select Options:</label>
+	    <select id="envolvidos" name="envolvidos" multiple="multiple">
+	        <option th:each="pessoa : ${grupo.participantes}"
+			 th:value="${pessoa.codigo}" 
+			 th:text="${pessoa.nome}">Nome Pessoa</option>
+	    </select>
+		
+		<input type="submit" value="Enviar">
+	</form>
+	<br>
+	
+	<a href="#" th:href="@{/}"> Voltar </a>
+
+	<script
+		src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"
+		integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+		crossorigin="anonymous"></script>
+	<script
+		src="https://cdn.jsdelivr.net/npm/jquery-mask-number@1.0.1/jquery.masknumber.js"
+		integrity="sha256-WBts8HqbdE/FudjwQQHknxDTxf4/gzymnXfmCNaXn0k="
+		crossorigin="anonymous"></script>
+	<script src="../static/js/componentes.js"
+		th:src="@{/js/componentes.js}"></script>
+
+</body>
+</html>

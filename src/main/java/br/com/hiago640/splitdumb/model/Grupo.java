@@ -34,10 +34,8 @@ public class Grupo implements Serializable {
 
 	@ManyToMany(fetch = FetchType.LAZY)
 	private List<Pessoa> participantes;
-//	@ManyToMany
-//	private List<Pessoa> participantes;
 
-	@OneToMany(fetch = FetchType.LAZY)
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "grupo")
 	private Set<Compra> compras = new HashSet<>();
 
 	public UUID getCodigo() {
