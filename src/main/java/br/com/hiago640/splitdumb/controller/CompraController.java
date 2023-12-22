@@ -54,7 +54,7 @@ public class CompraController {
 		LOGGER.trace("Entrou em abrirCadastroCompra");
 
 		LOGGER.debug("Grupo recebido: {}", grupo);
-		Grupo group = grupoRepository.buscarComParticipantesECompraByID(UUID.fromString(grupo));
+		Grupo group = grupoRepository.buscarComParticipantesByID(UUID.fromString(grupo));
 		session.setAttribute("grupo", group);
 
 		ModelAndView modelAndView = new ModelAndView("compra/newpurchase");
@@ -76,7 +76,7 @@ public class CompraController {
 		if (compra.getEnvolvidos().isEmpty())
 			compra.getEnvolvidos().add(compra.getComprador());
 
-		grupo.getCompras().add(compra);
+//		grupo.getCompras().add(compra);
 		compraService.salvar(compra);
 
 		session.removeAttribute("grupo");
