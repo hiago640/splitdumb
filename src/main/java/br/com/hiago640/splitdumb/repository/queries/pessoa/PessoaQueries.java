@@ -12,5 +12,5 @@ public interface PessoaQueries {
 	public Pessoa buscarComComprasByID(Long id);
 	
 	public Pessoa buscarComGruposByID(UUID id);
-
+	
 }

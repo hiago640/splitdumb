@@ -2,11 +2,11 @@ package br.com.hiago640.splitdumb.model;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -28,6 +28,8 @@ public class Compra implements Serializable {
 	private UUID codigo;
 
 	private String descricao;
+	
+	@Column(name = "vlrcompra")
 	private BigDecimal valorCompra;
 
 	@ManyToOne

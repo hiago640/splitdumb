@@ -1,7 +1,6 @@
 package br.com.hiago640.splitdumb.repository.queries.grupo;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 import javax.persistence.EntityManager;

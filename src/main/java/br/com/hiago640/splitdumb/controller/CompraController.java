@@ -1,5 +1,7 @@
 package br.com.hiago640.splitdumb.controller;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.List;
 import java.util.UUID;
 
@@ -17,9 +19,13 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import br.com.hiago640.splitdumb.model.Compra;
 import br.com.hiago640.splitdumb.model.Grupo;
+import br.com.hiago640.splitdumb.model.Movimentacao;
+import br.com.hiago640.splitdumb.model.Pessoa;
+import br.com.hiago640.splitdumb.model.TipoOperacaoEnum;
 import br.com.hiago640.splitdumb.repository.CompraRepository;
 import br.com.hiago640.splitdumb.repository.GrupoRepository;
 import br.com.hiago640.splitdumb.service.CompraService;
+import br.com.hiago640.splitdumb.service.MovimentacaoService;
 
 @Controller
 @RequestMapping("/compra")
@@ -35,6 +41,9 @@ public class CompraController {
 
 	@Autowired
 	CompraService compraService;
+	
+	@Autowired
+	MovimentacaoService movimentacaoService;
 
 	@GetMapping("/choose-group")
 	public ModelAndView abrirEscolherGrupo() {
@@ -77,6 +86,42 @@ public class CompraController {
 			compra.getEnvolvidos().add(compra.getComprador());
 
 		compraService.salvar(compra);
+		
+		Pessoa comprador = compra.getComprador();
+		BigDecimal valorCompra = compra.getValorCompra();
+		BigDecimal qtdDivisores = new BigDecimal(compra.getEnvolvidos().size());
+		List<Pessoa> envolvidos = compra.getEnvolvidos();
+
+		BigDecimal valorATransferir;
+
+		for (Pessoa envolvido : envolvidos) {
+			
+			if (!envolvido.equals(comprador)) {
+
+				valorATransferir = valorCompra.divide(qtdDivisores, 4, RoundingMode.HALF_UP);
+
+				//saida da conta do envolvido
+				Movimentacao movDespesa = new Movimentacao(envolvido);
+				movDespesa.setPessoa(envolvido);
+				movDespesa.setRecDesp(TipoOperacaoEnum.DESPESA);
+				movDespesa.setValor(valorATransferir);
+				movDespesa.setCompra(compra);
+				envolvido.getMovimentacoes().add(movDespesa);
+				
+				movimentacaoService.salvar(movDespesa);
+
+				//entrada na conta do comprador
+				Movimentacao movReceita = new Movimentacao(comprador);
+				movReceita.setPessoa(comprador);
+				movReceita.setRecDesp(TipoOperacaoEnum.RECEITA);
+				movReceita.setValor(valorATransferir);
+				movReceita.setCompra(compra);
+				comprador.getMovimentacoes().add(movReceita);
+				
+				movimentacaoService.salvar(movReceita);
+			}
+
+		}
 
 		session.removeAttribute("grupo");
 		attributes.addFlashAttribute("mensagem", "Compra cadastrada com sucesso");
