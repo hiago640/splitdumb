@@ -76,7 +76,6 @@ public class CompraController {
 		if (compra.getEnvolvidos().isEmpty())
 			compra.getEnvolvidos().add(compra.getComprador());
 
-//		grupo.getCompras().add(compra);
 		compraService.salvar(compra);
 
 		session.removeAttribute("grupo");

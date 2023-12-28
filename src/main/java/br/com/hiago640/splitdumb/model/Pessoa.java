@@ -1,6 +1,8 @@
 package br.com.hiago640.splitdumb.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
@@ -10,6 +12,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.Type;
 
@@ -30,6 +33,9 @@ public class Pessoa implements Serializable {
 
 	@ManyToMany(mappedBy = "participantes")
 	private Set<Grupo> grupos;
+
+	@Transient
+	private List<Transferencia> transferencias = new ArrayList<>();
 
 	public UUID getCodigo() {
 		return codigo;
@@ -69,6 +75,14 @@ public class Pessoa implements Serializable {
 
 	public void setGrupos(Set<Grupo> grupos) {
 		this.grupos = grupos;
+	}
+
+	public List<Transferencia> getTransferencias() {
+		return transferencias;
+	}
+
+	public void setTransferencias(List<Transferencia> transferencias) {
+		this.transferencias = transferencias;
 	}
 
 	@Override
