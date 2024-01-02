@@ -44,5 +44,9 @@
 		<AsyncLogger name="org.hibernate.type.descriptor.sql" level="trace" additivity="false">
 			<AppenderRef ref="Console"/>
 		</AsyncLogger>
+		<!-- Log Spring Security -->
+		<AsyncLogger name="org.springframework.security" level="debug" additivity="false">
+		<AppenderRef ref="Console"/>
+		</AsyncLogger>
 	</Loggers>
 </Configuration>

@@ -12,5 +12,7 @@ import br.com.hiago640.splitdumb.repository.queries.pessoa.PessoaQueries;
 public interface PessoaRepository extends JpaRepository<Pessoa, UUID>, PessoaQueries {
 
 	public List<Pessoa> findByGruposContaining(Grupo grupo);
+	
+	public Pessoa findByUsername(String username);
 
 }

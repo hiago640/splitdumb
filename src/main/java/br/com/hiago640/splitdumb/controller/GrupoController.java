@@ -85,7 +85,7 @@ public class GrupoController {
 	public String joinGroup(String grupo, RedirectAttributes redirectAttributes) {
 		
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		Pessoa pessoa = pessoaRepository.findByNome(auth.getName());
+		Pessoa pessoa = pessoaRepository.findByUsername(auth.getName());
 
 		LOGGER.trace("Entrou em joinGroup");
 		LOGGER.debug("Grupo Encontrado: {}", grupo);
