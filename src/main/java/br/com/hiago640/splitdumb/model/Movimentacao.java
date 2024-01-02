@@ -27,7 +27,7 @@ public class Movimentacao {
 	
 	private BigDecimal valor;
 	
-	@Column(name = "recdesp")
+	@Column(name = "recdesp", scale = 0)
 	private BigDecimal recDesp;
 
 	@ManyToOne

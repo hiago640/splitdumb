@@ -9,12 +9,8 @@
 	<h1>Entrar em um grupo</h1>
 	
 	<form action="#" th:action="@{/grupo/join}" method="post">
-		<h4>Usuários</h4>
-		<select name="pessoa" id="pessoa">
-			<option th:each="pessoa : ${pessoas}" th:value="${pessoa.codigo}" th:text="${pessoa.nome}">Usuário</option>
-		</select>
-	
-		<h4>Grupos</h4>
+		
+		<h4>Deseja entrar em qual grupo?</h4>
 		<select name="grupo" id="grupo">
 			<option th:each="grupo : ${grupos}" th:value="${grupo.codigo}" th:text="${grupo.nome}">Nome grupo</option>
 		</select>

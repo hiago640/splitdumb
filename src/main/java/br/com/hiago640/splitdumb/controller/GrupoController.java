@@ -6,6 +6,8 @@ import java.util.UUID;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -71,18 +73,20 @@ public class GrupoController {
 		LOGGER.trace("Entrou em entrarGrupo");
 
 		List<Grupo> grupos = grupoRepository.findAll();
-		List<Pessoa> pessoas = pessoaRepository.findAll();
 
 		LOGGER.debug("encaminhando para view grupo/join");
 		ModelAndView mv = new ModelAndView("grupo/join");
 		mv.addObject("grupos", grupos);
-		mv.addObject("pessoas", pessoas);
 
 		return mv;
 	}
 
 	@PostMapping("/join")
-	public String joinGroup(String grupo, Pessoa pessoa, RedirectAttributes redirectAttributes) {
+	public String joinGroup(String grupo, RedirectAttributes redirectAttributes) {
+		
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		Pessoa pessoa = pessoaRepository.findByNome(auth.getName());
+
 		LOGGER.trace("Entrou em joinGroup");
 		LOGGER.debug("Grupo Encontrado: {}", grupo);
 		LOGGER.debug("Pessoa Encontrada: {}", pessoa);

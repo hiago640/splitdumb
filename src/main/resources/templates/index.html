@@ -1,30 +1,47 @@
 <!DOCTYPE html>
-<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>Splitdumb</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+	<title>Splitdumb</title>
 </head>
+
 <body>
 	<h1>Bem vindo ao Splitdumb!</h1>
-	
+
 	<h2>Usuário</h2>
 	<a th:href=@{/pessoa/new}>Cadastrar novo Usuário</a>
 	<br>
 	<a th:href=@{/pessoa/list}>Listar Usuários cadastrados</a>
 	<br>
-	
+
 	<h2>Grupos</h2>
 	<a th:href=@{/grupo/new}>Cadastrar novo Grupo</a>
 	<br>
 	<a th:href=@{/grupo/list}>Listar Grupos cadastrados</a>
 	<br>
 	<a th:href=@{/grupo/join}>Entrar em um Grupo </a>
-	
+
 	<h2>Compras</h2>
 	<a th:href=@{/compra/choose-group}>Cadastrar nova Compra</a>
 	<br>
 	<a th:href=@{/compra/list}>Listar Compras cadastradas</a>
-	
+
+	<div th:fragment="logout" class="logout" sec:authorize="isAuthenticated()">
+		<p>Usuário Logado: <span sec:authentication="principal.username"></span></p>
+		<p>Usuário Logado: <span sec:authentication="principal"></span></p>
+		<p>Papéis: <span sec:authentication="principal.authorities"></span></p>
+		
+		<div>
+			<form action="#" th:action="@{/logout}" method="post">
+				<input type="submit" value="Logout" />
+			</form>
+		</div>
+	</div>
+	<br>
+
 </body>
+
 </html>
