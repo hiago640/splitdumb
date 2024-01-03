@@ -24,13 +24,6 @@
 		<label>Senha do usuário</label><br>
 		<input type="password" th:field="*{senha}" placeholder="Digite sua senha" />
 		<br>
-		<div th:each="papel: ${todosPapeis}">
-			<input type="checkbox" th:field="*{papeis}" th:value="${papel.codigo}">
-			<label th:for="${#ids.prev('papeis')}" th:text="${papel.nome}">Texto checkbox
-				1</label>
-		</div>
-
-		<br>
 		<input type="submit" value="Enviar">
 	</form>
 	<a href="#" th:href="@{/}"> Voltar </a>

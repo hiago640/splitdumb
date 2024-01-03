@@ -1,7 +1,8 @@
 package br.com.hiago640.splitdumb.model;
 
 import java.io.Serializable;
-import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
@@ -11,17 +12,18 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.Type;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 @Entity
 @Table(name = "pessoas")
-public class Pessoa implements Serializable {
+public class Pessoa implements Serializable, UserDetails {
 
 	private static final long serialVersionUID = -1195022911056262828L;
 
@@ -40,10 +42,6 @@ public class Pessoa implements Serializable {
 
 	@OneToMany(mappedBy = "pessoa", fetch = FetchType.EAGER)
 	private List<Movimentacao> movimentacoes;
-
-	@ManyToMany
-	@JoinTable(name = "usuario_papel", joinColumns = @JoinColumn(name = "codigo_usuario"), inverseJoinColumns = @JoinColumn(name = "codigo_papel"))
-	private List<Papel> papeis = new ArrayList<>();
 
 	private boolean ativo;
 
@@ -103,14 +101,6 @@ public class Pessoa implements Serializable {
 		this.movimentacoes = movimentacoes;
 	}
 
-	public List<Papel> getPapeis() {
-		return papeis;
-	}
-
-	public void setPapeis(List<Papel> papeis) {
-		this.papeis = papeis;
-	}
-
 	public boolean isAtivo() {
 		return ativo;
 	}
@@ -138,6 +128,41 @@ public class Pessoa implements Serializable {
 	public String toString() {
 		return String.format("Pessoa [codigo=%s, username=%s, nome=%s, email=%s, senha=%s, ativo=%s]", codigo, username,
 				nome, email, senha, ativo);
+	}
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {        
+        return Arrays.asList(new SimpleGrantedAuthority("ROLE_USER"));
+    }
+
+	@Override
+	public String getPassword() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public boolean isAccountNonExpired() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean isAccountNonLocked() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean isCredentialsNonExpired() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean isEnabled() {
+		// TODO Auto-generated method stub
+		return false;
 	}
 	
 }

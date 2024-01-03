@@ -25,33 +25,25 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests()
-// Qualquer um pode fazer requisições para essas URLs
-				.antMatchers("/css/**", "/js/**", "/login").permitAll()
-// Um usuário autenticado e com o papel ADMIN pode fazer requisições para essas URLs
-				.antMatchers("/**").hasRole("ADMIN")
-//.antMatchers("URL").hasAnyRole("ADMIN", "USUARIO")
-				.and()
-// A autenticação usando formulário está habilitada
-				.formLogin();
-// Uma página de login customizada
-//				.loginPage("/login");
-// Define a URL para o caso de falha no login
-//.failureUrl("/login-error");
+				.antMatchers("/css/**", "/js/**").permitAll()
+				.anyRequest().authenticated()
+                .and()
+            .formLogin()
+//                .loginPage("/login")
+                .permitAll()
+                .and()
+            .logout()
+                .permitAll();
 	}
 
-	// Autenticacao JDBC
-	// Autenticacao JDBC
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-		auth.jdbcAuthentication().dataSource(dataSource)
-				.usersByUsernameQuery("select username, senha, ativo " + "from pessoas " + "where username = ?")
-				.authoritiesByUsernameQuery("SELECT tab.username, papel.nome from"
-						+ "(SELECT usuario.username, usuario.codigo from pessoas usuario where username = ? ) as tab "
-						+ " inner join usuario_papel on codigo_usuario = tab.codigo"
-						+ " inner join papel on codigo_papel = papel.codigo;")
-		.passwordEncoder(passwordEncoder());
+	    auth.jdbcAuthentication().dataSource(dataSource)
+	            .usersByUsernameQuery("select username, senha, ativo from pessoas where username = ?")
+	            .authoritiesByUsernameQuery(
+	                    "SELECT username, 'ROLE_USER' FROM pessoas WHERE username=?")
+	            .passwordEncoder(passwordEncoder());
 	}
-
 //
 //	
 //	@Override
