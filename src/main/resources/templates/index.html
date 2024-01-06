@@ -12,8 +12,6 @@
 	<h1>Bem vindo ao Splitdumb!</h1>
 
 	<h2>Usuário</h2>
-	<a th:href=@{/pessoa/new}>Cadastrar novo Usuário</a>
-	<br>
 	<a th:href=@{/pessoa/list}>Listar Usuários cadastrados</a>
 	<br>
 
@@ -31,9 +29,6 @@
 
 	<div th:fragment="logout" class="logout" sec:authorize="isAuthenticated()">
 		<p>Usuário Logado: <span sec:authentication="principal.username"></span></p>
-		<p>Usuário Logado: <span sec:authentication="principal"></span></p>
-		<p>Papéis: <span sec:authentication="principal.authorities"></span></p>
-		
 		<div>
 			<form action="#" th:action="@{/logout}" method="post">
 				<input type="submit" value="Logout" />

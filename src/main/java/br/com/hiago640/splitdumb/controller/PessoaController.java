@@ -58,7 +58,7 @@ public class PessoaController {
 		Authentication authentication = new UsernamePasswordAuthenticationToken(pessoa, null, pessoa.getAuthorities());
 	    SecurityContextHolder.getContext().setAuthentication(authentication);
 		
-		return "redirect:/mostrarmensagem";
+		return "redirect:/";
 	}
 
 	@GetMapping("/list")

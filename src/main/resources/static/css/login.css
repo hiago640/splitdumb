@@ -1,0 +1,319 @@
+html,
+body {
+  margin: 0;
+  height: 100%;
+  overflow: hidden;
+}
+
+header {
+  justify-content: center;
+}
+
+.login-page {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 80vh;
+  margin-top: 18px;
+}
+
+.left {
+  display: flex;
+  width: 32%;
+  height: 70vh;
+  justify-content: center;
+  align-items: center;
+  background: #9cb0ec;
+  border: 1px solid transparent;
+  border-top-left-radius: 12px;
+  border-bottom-left-radius: 12px;
+}
+
+.right {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  background: #9cb0ec;
+  width: 36%;
+  height: 70vh;
+  border-top-right-radius: 12px;
+  border-bottom-right-radius: 12px;
+  -webkit-box-shadow: -11px 2px 12px -3px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: -11px 2px 12px -3px rgba(0, 0, 0, 0.75);
+  box-shadow: -11px 2px 12px -3px rgba(0, 0, 0, 0.75);
+}
+
+.left figure img {
+  width: 98%;
+}
+
+form {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: column;
+  width: 80%;
+  height: 80%;
+  border: 1px solid transparent;
+  border-radius: 20px;
+  animation-name: fade;
+  animation-duration: 500ms;
+}
+
+/* Animation when change forms */
+@keyframes fade {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+form h2 {
+  margin-top: 30px;
+  font-size: 42px;
+  color: #1c3272;
+  text-transform: uppercase;
+  font-weight: bold;
+}
+
+.inputs {
+  display: flex;
+  margin: 20px 0 300px;
+  flex-direction: column;
+}
+
+.inputs input {
+  width: 300px;
+  padding: 12px;
+  margin: 14px 0;
+  border: 1px solid #c9c8c8;
+  border-radius: 4px;
+  font-size: 16px;
+}
+
+.inputs .btnSign {
+  margin: 4px auto;
+  width: 300px;
+  background: #3f62c9;
+  text-align: center;
+  padding: 10px;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.4s ease;
+}
+
+.inputs .btnSign:hover {
+  background: #e4e4e4;
+  color: #3f62c9;
+}
+
+.inputs p {
+  margin-top: 16px;
+  font-size: 20px;
+  color: #e5e2e2;
+  text-shadow: 1px 1px #6e8ce6;
+  text-align: center;
+}
+
+.inputs p a {
+  color: #233874;
+  transition: all 0.3s ease;
+}
+
+.inputs p a:hover {
+  color: #4165c9;
+}
+
+.signUpForm {
+  display: none;
+}
+
+.signUpForm {
+  height: 74%;
+}
+
+.signUpForm h2 {
+  margin-top: 12px;
+  font-size: 26px;
+}
+
+.signUpForm .inputs input {
+  width: 300px;
+  padding: 10px;
+  margin: 8px 0;
+}
+
+.signUpForm p a {
+  font-size: 20px;
+}
+
+/* Toast Section */
+#toast {
+  visibility: hidden;
+  min-width: 250px;
+  margin-left: -125px;
+  background-color: #333;
+  color: #fff;
+  text-align: center;
+  border-radius: 2px;
+  padding: 16px;
+  position: fixed;
+  z-index: 1;
+  left: 50%;
+  bottom: 30px;
+  font-size: 17px;
+}
+
+#toast.show {
+  visibility: visible;
+  -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+  animation: fadein 0.5s, fadeout 0.5s 2.5s;
+}
+
+@-webkit-keyframes fadein {
+  from {
+    bottom: 0;
+    opacity: 0;
+  }
+  to {
+    bottom: 30px;
+    opacity: 1;
+  }
+}
+
+@keyframes fadein {
+  from {
+    bottom: 0;
+    opacity: 0;
+  }
+  to {
+    bottom: 30px;
+    opacity: 1;
+  }
+}
+
+@-webkit-keyframes fadeout {
+  from {
+    bottom: 30px;
+    opacity: 1;
+  }
+  to {
+    bottom: 0;
+    opacity: 0;
+  }
+}
+
+@keyframes fadeout {
+  from {
+    bottom: 30px;
+    opacity: 1;
+  }
+  to {
+    bottom: 0;
+    opacity: 0;
+  }
+}
+
+/* Responsive */
+@media screen and (max-width: 1088px) {
+  .left {
+    width: 40%;
+  }
+
+  .right {
+    width: 44%;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .left {
+    display: none;
+  }
+
+  .right {
+    border-radius: 12px;
+    width: 56%;
+    -webkit-box-shadow: 1px 2px 16px -3px #000000bf;
+    -moz-box-shadow: 1px 2px 16px -3px #000000bf;
+    box-shadow: 1px 2px 16px -3px #000000bf;
+  }
+
+  .signUpForm .inputs input,
+  .signUpForm .inputs .btnSign {
+    width: 270px;
+  }
+}
+
+@media screen and (max-width: 590px) {
+  .signUpForm h2 {
+    font-size: 22px;
+  }
+
+  .signUpForm .inputs input {
+    font-size: 14px;
+  }
+}
+
+@media screen and (max-width: 535px) {
+  .right {
+    width: 80%;
+  }
+
+  .inputs input {
+    width: 100%;
+  }
+
+  .inputs p {
+    font-size: 16px;
+    text-align: center;
+  }
+
+  form h2 {
+    margin-top: 14px;
+  }
+}
+
+@media screen and (max-width: 375px) {
+  .signUpForm .inputs input,
+  .signUpForm .inputs .btnSign {
+    width: 240px;
+  }
+
+  .signInForm .inputs input,
+  .signInForm .inputs .btnSign {
+    width: 260px;
+  }
+}
+
+@media screen and (max-width: 320px) {
+  .signUpForm .inputs input,
+  .signUpForm .inputs .btnSign {
+    width: 200px;
+  }
+
+  .signInForm .inputs input,
+  .signInForm .inputs .btnSign {
+    width: 220px;
+  }
+
+  .signUpForm h2 {
+    font-size: 18px;
+  }
+
+  .signUpForm .inputs .btnSign {
+    font-size: 14px;
+  }
+}
+
+@media screen and (max-height: 670px) {
+  .signUpForm {
+    height: 90%;
+  }
+}
