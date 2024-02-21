@@ -10,6 +10,8 @@ import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,12 +20,15 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import br.com.hiago640.splitdumb.model.Compra;
+import br.com.hiago640.splitdumb.model.CompraDTO;
 import br.com.hiago640.splitdumb.model.Grupo;
 import br.com.hiago640.splitdumb.model.Movimentacao;
 import br.com.hiago640.splitdumb.model.Pessoa;
 import br.com.hiago640.splitdumb.model.TipoOperacaoEnum;
 import br.com.hiago640.splitdumb.repository.CompraRepository;
 import br.com.hiago640.splitdumb.repository.GrupoRepository;
+import br.com.hiago640.splitdumb.repository.MovimentacaoRepository;
+import br.com.hiago640.splitdumb.repository.PessoaRepository;
 import br.com.hiago640.splitdumb.service.CompraService;
 import br.com.hiago640.splitdumb.service.MovimentacaoService;
 
@@ -44,6 +49,12 @@ public class CompraController {
 	
 	@Autowired
 	MovimentacaoService movimentacaoService;
+	
+	@Autowired
+	MovimentacaoRepository movimentacaoRepository;
+	
+	@Autowired
+	PessoaRepository pessoaRepository;
 
 	@GetMapping("/choose-group")
 	public ModelAndView abrirEscolherGrupo() {
@@ -137,10 +148,40 @@ public class CompraController {
 	public ModelAndView mostrarTodasCompras() {
 		LOGGER.trace("Entrou em mostrarTodasCompras");
 
-		List<Compra> compras = compraRepository.buscarEnvolvidos();
+		List<CompraDTO> compras = compraRepository.buscarComprasDoGrupo(null);
+		LOGGER.info("compras: {}", compras);
 
-		LOGGER.debug("encaminhando para view compra/listall");
-		ModelAndView mv = new ModelAndView("compra/listall");
+		LOGGER.debug("encaminhando para view compra/list");
+		ModelAndView mv = new ModelAndView("compra/list");
+		mv.addObject("compras", compras);
+
+		return mv;
+	}
+	
+	@GetMapping("/list-by-group")
+	public ModelAndView abrirEscolherGrupoBuscar() {
+		LOGGER.trace("Entrou em abrirEscolherGrupoBuscar");
+
+		List<Grupo> grupos = grupoRepository.findAll();
+
+		LOGGER.trace("Encaminhando para view compra/list-by-group");
+		ModelAndView modelAndView = new ModelAndView("compra/searchgroup");
+		modelAndView.addObject("grupos", grupos);
+
+		return modelAndView;
+	}
+	
+	@PostMapping("/list-by-group")
+	public ModelAndView mostrarComprasGrupo(String grupo) {
+		LOGGER.trace("Entrou em mostrarComprasGrupo");
+		
+		Grupo group = grupoRepository.findById(UUID.fromString(grupo)).get();
+		
+		List<CompraDTO> compras = compraRepository.buscarComprasDoGrupo(group);
+		LOGGER.info("compras: {}", compras);
+
+		LOGGER.debug("encaminhando para view compra/list");
+		ModelAndView mv = new ModelAndView("compra/list");
 		mv.addObject("compras", compras);
 
 		return mv;

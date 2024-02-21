@@ -34,7 +34,15 @@
 		<div th:each="pessoa : ${compra.envolvidos}">
 			<label for="nome">Nome: </label> 
 			<span th:text="${pessoa.nome}">Nome</span>
-		</div>			
+		</div>		
+		
+		<h4>Movimentações</h4>
+		<div th:each="movimentacao : ${compra.movimentacoes}">
+			<label for="nome">Nome: </label> 
+			<span th:text="${movimentacao.pessoa.nome}">nome</span>
+			<span th:text="${movimentacao.recDesp}">nome</span>
+			<span th:text="${movimentacao.valor}">nome</span>
+		</div>		
 	</div>
 	<br>
 	<a href="#" th:href="@{/}"> Voltar </a>

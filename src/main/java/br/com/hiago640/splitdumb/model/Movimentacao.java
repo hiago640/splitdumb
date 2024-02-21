@@ -81,4 +81,10 @@ public class Movimentacao {
 		this.compra = compra;
 	}
 
+	@Override
+	public String toString() {
+		return String.format("Movimentacao [codigo=%s, compra=%s, valor=%s, recDesp=%s, pessoa=%s]", codigo, compra,
+				valor, recDesp, pessoa);
+	}
+
 }
