@@ -10,12 +10,15 @@ import javax.persistence.TypedQuery;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 import br.com.hiago640.splitdumb.model.Compra;
 import br.com.hiago640.splitdumb.model.CompraDTO;
 import br.com.hiago640.splitdumb.model.Grupo;
 import br.com.hiago640.splitdumb.model.Pessoa;
 import br.com.hiago640.splitdumb.repository.MovimentacaoRepository;
+import br.com.hiago640.splitdumb.repository.PessoaRepository;
 
 public class CompraQueriesImpl implements CompraQueries {
 
@@ -23,6 +26,9 @@ public class CompraQueriesImpl implements CompraQueries {
 
 	@PersistenceContext
 	private EntityManager manager;
+	
+	@Autowired
+	PessoaRepository pessoaRepository;
 	
 	@Autowired
 	MovimentacaoRepository movimentacaoRepository;
@@ -87,7 +93,10 @@ public class CompraQueriesImpl implements CompraQueries {
             compraDTO.setGrupo(compra.getGrupo());
             compraDTO.setEnvolvidos(compra.getEnvolvidos());
 
-            compraDTO.setMovimentacoes(movimentacaoRepository.findByCompra(compra));
+            Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+    		Pessoa pessoa = pessoaRepository.findByUsername(auth.getName());
+    		
+            compraDTO.setMovimentacoes(movimentacaoRepository.findByCompraAndPessoa(compra, pessoa));
 
             comprasDTO.add(compraDTO);
         }

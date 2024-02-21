@@ -40,7 +40,12 @@
 		<div th:each="movimentacao : ${compra.movimentacoes}">
 			<label for="nome">Nome: </label> 
 			<span th:text="${movimentacao.pessoa.nome}">nome</span>
-			<span th:text="${movimentacao.recDesp}">nome</span>
+			
+			<div th:switch="${movimentacao.recDesp}"> 
+			  <p th:case="1">Você emprestou: </p>
+			  <p th:case="-1">Você pegou emprestado: </p>
+			  <p th:case="*">Não envolvido</p> 
+			</div>
 			<span th:text="${movimentacao.valor}">nome</span>
 		</div>		
 	</div>
