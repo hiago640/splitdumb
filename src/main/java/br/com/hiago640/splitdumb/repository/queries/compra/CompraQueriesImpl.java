@@ -1,7 +1,10 @@
 package br.com.hiago640.splitdumb.repository.queries.compra;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -16,7 +19,10 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import br.com.hiago640.splitdumb.model.Compra;
 import br.com.hiago640.splitdumb.model.CompraDTO;
 import br.com.hiago640.splitdumb.model.Grupo;
+import br.com.hiago640.splitdumb.model.Movimentacao;
 import br.com.hiago640.splitdumb.model.Pessoa;
+import br.com.hiago640.splitdumb.model.TipoOperacaoEnum;
+import br.com.hiago640.splitdumb.model.TotalPorPessoaDTO;
 import br.com.hiago640.splitdumb.repository.MovimentacaoRepository;
 import br.com.hiago640.splitdumb.repository.PessoaRepository;
 
@@ -96,7 +102,20 @@ public class CompraQueriesImpl implements CompraQueries {
             Authentication auth = SecurityContextHolder.getContext().getAuthentication();
     		Pessoa pessoa = pessoaRepository.findByUsername(auth.getName());
     		
+    		Map<Pessoa, TotalPorPessoaDTO> totaisPorPessoa = new HashMap<>();
+    		List<Movimentacao> movimentacoes = movimentacaoRepository.findByCompraAndPessoa(compra, pessoa);
+    		
+    		for (Movimentacao movimentacao : movimentacoes) {
+                BigDecimal valorMovimentacao = movimentacao.getValor();
+                
+                TotalPorPessoaDTO totalPorPessoa = totaisPorPessoa.getOrDefault(pessoa, new TotalPorPessoaDTO());
+                totalPorPessoa.setTotal(totalPorPessoa.getTotal().add(valorMovimentacao));
+                totalPorPessoa.setTipoOperacao(movimentacao.getRecDesp());
+                totaisPorPessoa.put(pessoa, totalPorPessoa);
+            }
+    		
             compraDTO.setMovimentacoes(movimentacaoRepository.findByCompraAndPessoa(compra, pessoa));
+            compraDTO.setTotaisPorPessoa(totaisPorPessoa);
 
             comprasDTO.add(compraDTO);
         }

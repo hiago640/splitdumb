@@ -2,6 +2,7 @@ package br.com.hiago640.splitdumb.model;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -14,6 +15,8 @@ public class CompraDTO {
 	private Grupo grupo;
 	private List<Pessoa> envolvidos;
 	private List<Movimentacao> movimentacoes;
+	private Map<Pessoa, TotalPorPessoaDTO> totaisPorPessoa;
+
 
 	public CompraDTO() {
 
@@ -83,6 +86,15 @@ public class CompraDTO {
 
 	public void setEnvolvidos(List<Pessoa> envolvidos) {
 		this.envolvidos = envolvidos;
+	}
+	
+
+	public Map<Pessoa, TotalPorPessoaDTO> getTotaisPorPessoa() {
+		return totaisPorPessoa;
+	}
+
+	public void setTotaisPorPessoa(Map<Pessoa, TotalPorPessoaDTO> totaisPorPessoa) {
+		this.totaisPorPessoa = totaisPorPessoa;
 	}
 
 	@Override

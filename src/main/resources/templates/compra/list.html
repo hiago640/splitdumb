@@ -36,18 +36,19 @@
 			<span th:text="${pessoa.nome}">Nome</span>
 		</div>		
 		
-		<h4>Movimentações</h4>
-		<div th:each="movimentacao : ${compra.movimentacoes}">
-			<label for="nome">Nome: </label> 
-			<span th:text="${movimentacao.pessoa.nome}">nome</span>
-			
-			<div th:switch="${movimentacao.recDesp}"> 
+		<h4>Totais por Pessoa</h4>
+		<div th:each="total : ${compra.totaisPorPessoa}">
+		    <p th:text="'Nome: ' + ${total.key.nome}"></p>
+		    <div th:switch="${total.value.tipoOperacao}"> 
 			  <p th:case="1">Você emprestou: </p>
 			  <p th:case="-1">Você pegou emprestado: </p>
 			  <p th:case="*">Não envolvido</p> 
 			</div>
-			<span th:text="${movimentacao.valor}">nome</span>
-		</div>		
+		    <p th:text="'Total: ' + ${total.value.total}"></p>
+		</div>
+
+	</div>
+
 	</div>
 	<br>
 	<a href="#" th:href="@{/}"> Voltar </a>
