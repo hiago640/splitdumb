@@ -18,6 +18,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import br.com.hiago640.splitdumb.model.Pessoa;
 import br.com.hiago640.splitdumb.repository.PessoaRepository;
+import br.com.hiago640.splitdumb.service.EmailService;
 import br.com.hiago640.splitdumb.service.PessoaService;
 
 @Controller
@@ -35,6 +36,9 @@ public class PessoaController {
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 
+	@Autowired
+	private EmailService emailService;
+	
 	@GetMapping("/new")
 	public String abreCadastro(Pessoa pessoa) {
 		LOGGER.trace("Entrou em abreCadastro");
@@ -49,16 +53,19 @@ public class PessoaController {
 		LOGGER.debug("Pessoa recebida: {}", pessoa);
 
 		
-		pessoa.setAtivo(true);
+		pessoa.setAtivo(false);
 		pessoa.setSenha(passwordEncoder.encode(pessoa.getSenha()));
 		pessoaService.salvar(pessoa);
-
-		redirectAttributes.addFlashAttribute("mensagem", "Usuário cadastrado com sucesso!");
-
-		Authentication authentication = new UsernamePasswordAuthenticationToken(pessoa, null, pessoa.getAuthorities());
-	    SecurityContextHolder.getContext().setAuthentication(authentication);
 		
-		return "redirect:/";
+		 String assunto = "Confirmação de Cadastro";
+	        String corpo = "Olá " + pessoa.getNome() + ",\n\n"
+	                     + "Seu cadastro foi realizado com sucesso. Por favor, clique no link abaixo para confirmar sua conta:\n\n"
+	                     + "http://localhost:8080/confirmar?token=" + pessoa.getTokenConfirmacao();
+	    
+	    String returnEmail = emailService.sendEmail(pessoa.getEmail(), assunto, corpo);
+		LOGGER.trace(returnEmail);
+	    
+		return "validateemail";
 	}
 
 	@GetMapping("/list")

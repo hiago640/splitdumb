@@ -24,16 +24,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.authorizeRequests()
-				.antMatchers("/css/**", "/js/**", "/images/**", "/pessoa/new").permitAll()
-				.anyRequest().authenticated()
-                .and()
-            .formLogin()
-                .loginPage("/login")
-                .permitAll()
-                .and()
-            .logout()
-                .permitAll();
+        http.authorizeRequests(requests -> requests
+                .antMatchers("/css/**", "/js/**", "/images/**", "/pessoa/new", "/confirmar**", "/mostrarmensagem").permitAll()
+                .anyRequest().authenticated())
+                .formLogin(login -> login
+                        .loginPage("/login")
+                        .permitAll())
+                .logout(logout -> logout
+                        .permitAll());
 	}
 
 	@Override
@@ -44,14 +42,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	                    "SELECT username, 'ROLE_USER' FROM pessoas WHERE username=?")
 	            .passwordEncoder(passwordEncoder());
 	}
-//
-//	
-//	@Override
-//	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-//		auth.inMemoryAuthentication()
-//			.withUser("admin").password("{noop}admin").roles("ADMIN");
-//		// .withUser("outro").password("12345").roles("ADMIN", "USUARIO");
-//	}
 
 	@Bean
 	public PasswordEncoder passwordEncoder() {

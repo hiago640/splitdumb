@@ -15,4 +15,6 @@ public interface PessoaRepository extends JpaRepository<Pessoa, UUID>, PessoaQue
 	
 	public Pessoa findByUsername(String username);
 
+	public Pessoa findByTokenConfirmacao(UUID token);
+
 }

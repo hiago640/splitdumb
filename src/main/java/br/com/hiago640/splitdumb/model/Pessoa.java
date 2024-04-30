@@ -36,14 +36,21 @@ public class Pessoa implements Serializable, UserDetails {
 	private String nome;
 	private String email;
 	private String senha;
-
+	
+	@Type(type = "uuid-char") // Esta linha configura a coluna como VARCHAR
+	private UUID tokenConfirmacao;
+	private boolean ativo;
+	
 	@ManyToMany(mappedBy = "participantes")
 	private Set<Grupo> grupos;
 
 	@OneToMany(mappedBy = "pessoa", fetch = FetchType.EAGER)
 	private List<Movimentacao> movimentacoes;
 
-	private boolean ativo;
+	public Pessoa() {
+		this.ativo = false;
+		this.tokenConfirmacao = UUID.randomUUID();
+	}
 
 	public UUID getCodigo() {
 		return codigo;
@@ -107,6 +114,14 @@ public class Pessoa implements Serializable, UserDetails {
 
 	public void setAtivo(boolean ativo) {
 		this.ativo = ativo;
+	}
+
+	public UUID getTokenConfirmacao() {
+		return tokenConfirmacao;
+	}
+
+	public void setTokenConfirmacao(UUID tokenConfirmacao) {
+		this.tokenConfirmacao = tokenConfirmacao;
 	}
 
 	@Override

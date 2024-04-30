@@ -1,8 +1,13 @@
 package br.com.hiago640.splitdumb.service;
 
+import java.util.UUID;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -31,21 +36,33 @@ public class PessoaService {
 	@Transactional
 	public void alterar(Pessoa pessoa) {
 		logger.trace(">>>>>>>>>>>>>>>> Entrou no método alterar");
-		logger.trace(">>>>>>>>>>>>>>>> salvando compra: {}", pessoa);
+		logger.trace(">>>>>>>>>>>>>>>> salvando pessoa: {}", pessoa);
 
 		pessoaRepository.save(pessoa);
 
 		logger.trace(">>>>>>>>>>>>>>>> Pessoa alterada!");
 
 	}
-//
-//	@Transactional
-//	public void remover(Long id) {
-//		logger.trace(">>>>>>>>>>>>>>>> Entrou no método remover");
-//		logger.trace(">>>>>>>>>>>>>>>> removendo a pessoa com o id: {}", id);
-//
-//		pessoaRepository.deleteById(id);
-//
-//		logger.trace(">>>>>>>>>>>>>>>> Pessoa removida");
-//	}
+
+	@Transactional
+	public boolean ativarConta(UUID token) {
+		logger.trace(">>>>>>>>>>>>>>>> Entrou no método ativarConta");
+		Pessoa pessoa = pessoaRepository.findByTokenConfirmacao(token);
+
+		if (pessoa != null) {
+			// Se o token for válido, ativa a conta
+			pessoa.setAtivo(true);
+			pessoa.setTokenConfirmacao(null);
+			
+			pessoaRepository.save(pessoa);
+			
+			Authentication authentication = new UsernamePasswordAuthenticationToken(pessoa, null, pessoa.getAuthorities());
+    	    SecurityContextHolder.getContext().setAuthentication(authentication);
+    	    
+			return true; // Conta ativada com sucesso
+		} else {
+			return false; // Token de confirmação inválido
+		}
+
+	}
 }
