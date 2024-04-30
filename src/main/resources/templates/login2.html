@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<html>
+
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link href="https://fonts.googleapis.com/css?family=Comfortaa&display=swap" rel="stylesheet">
+	<link th:href="@{/css/login2.css}" rel="stylesheet" />
+	<style>
+
+	</style>
+</head>
+
+<body>
+
+	<div class="flex-container">
+		<div class="menu">
+			<div class="login-wrap">
+				<div class="login-html">
+					<input id="tab-1" type="radio" name="tab" class="sign-in" checked><label for="tab-1" class="tab">Log
+						In</label>
+					<input id="tab-2" type="radio" name="tab" class="sign-up"><label for="tab-2"
+						class="tab">Registrar</label>
+
+					<div class="login-form">
+
+						<form th:action="@{/login}" method="post">
+
+							<div class="sign-in-htm">
+								<p th:if="${param.error}">Usuário e/ou senha inválidos.</p>
+								<p th:if="${param.logout}">Você foi deslogado.</p>
+								<div class="group">
+									<label for="user" class="label">Nome de Usuário</label>
+									<input id="username" name="username" type="text" class="input"
+										style="color:#6a6f8c !important;">
+								</div>
+								<div class="group">
+									<label for="password" class="label">Senha</label>
+									<input name="password" type="password" class="input" data-type="password"
+										style="color:#6a6f8c !important;">
+								</div>
+
+								<div class="group">
+									<button type="submit" class="button">Sign In </button>
+								</div>
+								<div class="hr"></div>
+							</div>
+						</form>
+
+						<form th:action="@{/pessoa/new}" method="post" th:object="${pessoa}">
+							<div class="sign-up-htm">
+								<div class="group">
+									<label for="user" class="label">Nome do Usuário</label>
+									<input type="text" th:field="*{username}" class="input" id="username"
+										style="color:#6a6f8c !important;">
+								</div>
+								<div class="group">
+									<label for="nome" class="label">Nome Completo</label>
+									<input type="text" th:field="*{nome}" class="input" id="nome"
+										style="color:#6a6f8c !important;">
+								</div>
+								<div class="group">
+									<label for="email" class="label">Email</label>
+									<input type="email" th:field="*{email}" class="input" id="email"
+										style="color:#6a6f8c !important;">
+								</div>
+								<div class="group">
+									<label for="password" class="label">Senha</label>
+									<input type="password" th:field="*{senha}" class="input" id="password"
+										data-type="password" style="color:#6a6f8c !important;">
+								</div>
+								<div class="group">
+									<input type="submit" class="button" value="Registrar">
+								</div>
+								<div class="foot-lnk">
+									<label for="tab-1"><a>Already Member?</a></label>
+								</div>
+							</div>
+						</form>
+
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="main">
+			<img class="bgimg"
+				src="https://cdn.glitch.com/0546b2e4-df7e-4fa2-b8a6-b67bbb481144%2FCopy%20of%20Asset%202.png?v=1584371192214"
+				alt="Trulli">
+		</div>
+
+		<div class="main2">
+			<font color="white">
+				<h1>Welcome!</h1>
+				<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
+					et dolore
+					magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation deserunt mollit anim id est
+					laborum.</p>
+			</font>
+		</div>
+
+	</div>
+</body>
+
+</html>

@@ -30,7 +30,7 @@ public class IndexController {
 	public String login(Pessoa pessoa) {
 		logger.trace("Entrou em login");
 		logger.trace("Encaminhando para a view login");
-		return "login";
+		return "login2";
 	}
 
 }
