@@ -23,9 +23,6 @@ public class ClassTest {
 		manager.addUsuario(tayna);
 		manager.addUsuario(otoniel);
 
-		
-		//primeira compra
-		//hia 1000 4 hia lea tay oto EQUAL
 		List<Split> splits = new ArrayList<>();
 		splits.add(new Split(hiago));
 		splits.add(new Split(leandro));
