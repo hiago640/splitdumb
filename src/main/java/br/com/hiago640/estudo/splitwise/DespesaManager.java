@@ -28,25 +28,25 @@ public class DespesaManager {
 		balanceSheet.put(user.getId(), new HashMap<>());
 	}
 
-	public void addDespesa(ExpenseType expenseType, double amount, String paidBy, List<Split> splits,
+	public void addDespesa(ExpenseType expenseType, double amount, String comprador, List<Split> splits,
 			ExpenseMetadata expenseMetadata) {
 
-		Despesa expense = ExpenseService.createExpense(expenseType, amount, userMap.get(paidBy), splits,
+		Despesa expense = ExpenseService.createExpense(expenseType, amount, userMap.get(comprador), splits,
 				expenseMetadata);
 		expenses.add(expense);
 		for (Split split : expense.getSplits()) {
-			String paidTo = split.getUser().getId();
-			Map<String, Double> balances = balanceSheet.get(paidBy);
-			if (!balances.containsKey(paidTo)) {
-				balances.put(paidTo, 0.0);
+			String devedor = split.getUser().getId();
+			Map<String, Double> balances = balanceSheet.get(comprador);
+			if (!balances.containsKey(devedor)) {
+				balances.put(devedor, 0.0);
 			}
-			balances.put(paidTo, balances.get(paidTo) + split.getAmount());
+			balances.put(devedor, balances.get(devedor) + split.getAmount());
 
-			balances = balanceSheet.get(paidTo);
-			if (!balances.containsKey(paidBy)) {
-				balances.put(paidBy, 0.0);
+			balances = balanceSheet.get(devedor);
+			if (!balances.containsKey(comprador)) {
+				balances.put(comprador, 0.0);
 			}
-			balances.put(paidBy, balances.get(paidBy) - split.getAmount());
+			balances.put(comprador, balances.get(comprador) - split.getAmount());
 		}
 	}
 

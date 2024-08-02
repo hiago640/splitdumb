@@ -1,6 +1,6 @@
 package br.com.hiago640.estudo.splitwise.models;
 
-public abstract class Split {
+public class Split {
     private User user;
     double amount;
 
