@@ -48,8 +48,6 @@ public class ClassTest {
 		manager.addDespesa(tayna, 800D, splits, null);
 		splits.clear();
 		
-		manager.mostraSaldo();
-		System.out.println("-------");
 		manager.otimizarSaldos();
 	}
 			

@@ -35,4 +35,10 @@ public class Transacao {
 		this.quantia = quantia;
 	}
 
+	@Override
+	public String toString() {
+		return String.format("%s deve pagar %s: %.2f", devedor.getNomeUsu(), credor.getNomeUsu(), quantia);
+	}
+
+	
 }

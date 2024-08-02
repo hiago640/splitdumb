@@ -61,53 +61,8 @@ public class DespesaProcessor {
 
 	}
 
-	public void mostraSaldo(Usuario usuario) {
-		boolean isEmpty = true;
-
-		for (Entry<Usuario, Double> saldoUsuario : balancoPatrimonial.get(usuario).entrySet()) {
-
-			if (saldoUsuario.getValue() != 0D) {
-				isEmpty = false;
-				mostrarSaldo(usuario, saldoUsuario.getKey(), saldoUsuario.getValue());
-			}
-
-		}
-
-		if (isEmpty)
-			System.out.println("Sem Saldo.");
-	}
-
-	public void mostraSaldo() {
-		boolean isEmpty = true;
-
-		for (Entry<Usuario, Map<Usuario, Double>> todosOsSaldos : balancoPatrimonial.entrySet()) {
-
-			for (Entry<Usuario, Double> saldoUsuario : todosOsSaldos.getValue().entrySet()) {
-
-				if (saldoUsuario.getValue() > 0) {
-					isEmpty = false;
-					mostrarSaldo(todosOsSaldos.getKey(), saldoUsuario.getKey(), saldoUsuario.getValue());
-				}
-			}
-
-		}
-
-		if (isEmpty)
-			System.out.println("Sem Saldo.");
-	}
-
-	private void mostrarSaldo(Usuario usuario1, Usuario usuario2, double quantia) {
-		if (quantia < 0)
-			System.out
-					.println(usuario1.getNomeUsu() + " deve pagar " + usuario2.getNomeUsu() + ": " + Math.abs(quantia));
-		else if (quantia > 0)
-			System.out
-					.println(usuario2.getNomeUsu() + " deve pagar " + usuario1.getNomeUsu() + ": " + Math.abs(quantia));
-
-	}
-
 	public void otimizarSaldos() {
-		
+
 		// Calcule o saldo líquido de cada usuário
 		Map<Usuario, Double> saldosLiquidos = new HashMap<>();
 		for (Usuario usuario : balancoPatrimonial.keySet()) {
@@ -135,7 +90,15 @@ public class DespesaProcessor {
 			}
 		}
 
-		// Consolide as dívidas e créditos
+		consolidarDividasECreditos(saldosLiquidos, transacoes, credores, devedores);
+
+		// Exibe as transações consolidadas
+		transacoes.forEach(System.out::println);
+	}
+
+	private void consolidarDividasECreditos(Map<Usuario, Double> saldosLiquidos, List<Transacao> transacoes,
+			List<Usuario> credores, List<Usuario> devedores) {
+
 		for (Usuario devedor : devedores) {
 			for (Iterator<Usuario> credorIterator = credores.iterator(); credorIterator.hasNext();) {
 				Usuario credor = credorIterator.next();
@@ -160,12 +123,6 @@ public class DespesaProcessor {
 					}
 				}
 			}
-		}
-
-		// Exibe as transações consolidadas
-		for (Transacao transacao : transacoes) {
-			System.out.printf("%s deve pagar %s: %.2f%n", transacao.getDevedor().getNomeUsu(),
-					transacao.getCredor().getNomeUsu(), transacao.getQuantia());
 		}
 	}
 
