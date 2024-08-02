@@ -2,7 +2,7 @@ package br.com.hiago640.estudo.splitwise.models;
 
 import java.util.List;
 
-public class Despesa {
+public abstract class Despesa {
     private String id;
     private double amount;
     private User paidBy;
